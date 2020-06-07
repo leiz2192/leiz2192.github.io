@@ -1,0 +1,1294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Windows Terminal集成第三方Bash</title>
+    <url>/2020/06/07/Windows-Terminal/</url>
+    <content><![CDATA[<p>将Git Bash和Cygwin集成到Windows Terminal中。</p>
+<p>各参数说明参见<a href="https://docs.microsoft.com/zh-cn/windows/terminal/customize-settings/profile-settings" target="_blank" rel="noopener">Windows 终端中的配置文件设置</a>。</p>
+<p>我的配置如下。其中guid自定义，确保其唯一性和格式正确行即可；commandline修改为实际安装路径，其中我的Cygwin64配置是以zsh启动。</p>
+<a id="more"></a>
+<p>Git Bash设置：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"guid"</span> : <span class="string">"&#123;0caa0dad-35be-5f56-a8ff-afceeeaa6109&#125;"</span>,</span><br><span class="line">    <span class="attr">"commandline"</span> : <span class="string">"C:\\Program Files\\Git\\bin\\bash.exe --login -i"</span>,</span><br><span class="line">    <span class="attr">"icon"</span> : <span class="string">"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Git\\gwindows_logo.png"</span>,</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"Git Bash"</span>,</span><br><span class="line">    <span class="attr">"startingDirectory"</span> : <span class="string">"%USERPROFILE%"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Cygwin64设置：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"guid"</span> : <span class="string">"&#123;0caa0dad-35be-5f56-35be-0a998ec441b8&#125;"</span>,</span><br><span class="line">    <span class="attr">"commandline"</span> : <span class="string">"C:\\cygwin64\\bin\\zsh.exe --login -i"</span>,</span><br><span class="line">    <span class="attr">"icon"</span> : <span class="string">"C:\\cygwin64\\Cygwin.ico"</span>,</span><br><span class="line">    <span class="attr">"name"</span> : <span class="string">"Cygwin64"</span>,</span><br><span class="line">    <span class="attr">"startingDirectory"</span> : <span class="string">"%USERPROFILE%"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>应用于所有配置文件的设置：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // Put settings here that you want to apply to all profiles.</span><br><span class="line">    "acrylicOpacity" : 0.8,</span><br><span class="line">    "closeOnExit" : true,</span><br><span class="line">    "colorScheme": "Solarized Dark",</span><br><span class="line">    "padding" : "0, 0, 0, 0",</span><br><span class="line">    "cursorShape" : "bar",</span><br><span class="line">    "fontSize" : 12,</span><br><span class="line">    "snapOnInput" : true,</span><br><span class="line">    "historySize" : 9001,</span><br><span class="line">    "useAcrylic" : true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>const in C++</title>
+    <url>/2020/01/01/const-in-C/</url>
+    <content><![CDATA[<p>C++中const可用于变量, 指针, 函数和类.</p>
+<h2 id="修饰变量"><a href="#修饰变量" class="headerlink" title="修饰变量"></a>修饰变量</h2><p>const修饰的变量的值不能再修改, 编译器也可以对其进行数据静态类型检查. 所以用const声明的变量可以保证类型安全, 用以取代C中的宏定义.</p>
+<p>const定义的常量在C中是全局的, 在C++中则视声明位置而定.</p>
+<h2 id="修饰指针"><a href="#修饰指针" class="headerlink" title="修饰指针"></a>修饰指针</h2><p>使用指针时涉及到两个对象: 该指针本身和被它所指的对象.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *pc;    <span class="comment">// pc是到const char的指针, 即*pc的内容不可修改, 但pc可以指向其他字符串</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> <span class="keyword">const</span> *pc;    <span class="comment">// 同"const char *pc"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> *<span class="keyword">const</span> pc;    <span class="comment">// pc到char的const指针, 即*pc的内容可以修改, 但pc不能指向其他字符串</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="函数中使用"><a href="#函数中使用" class="headerlink" title="函数中使用"></a>函数中使用</h2><h3 id="修饰函数参数"><a href="#修饰函数参数" class="headerlink" title="修饰函数参数"></a>修饰函数参数</h3><p>const常用于修饰函数的指针参数和引用参数, 一是表示参数的内容不可修改, 二是可以提高效率.</p>
+<h3 id="修饰函数返回值"><a href="#修饰函数返回值" class="headerlink" title="修饰函数返回值"></a>修饰函数返回值</h3><p>如果函数的返回值是指针或引用, 增加const修饰后, 则返回值不能被直接修改, 且返回值只能被赋值给const修饰的同类型变量.</p>
+<h2 id="类中使用"><a href="#类中使用" class="headerlink" title="类中使用"></a>类中使用</h2><h3 id="修饰成员变量"><a href="#修饰成员变量" class="headerlink" title="修饰成员变量"></a>修饰成员变量</h3><p>const的成员变量不能被修改, 且只能在初始化列表中赋值.</p>
+<h3 id="修饰成员函数"><a href="#修饰成员函数" class="headerlink" title="修饰成员函数"></a>修饰成员函数</h3><p>任何不会修改数据成员的成员函数都应用const修饰.<br>修饰形式:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span>)</span> <span class="keyword">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>对于使用了const修饰的成员函数:</p>
+<ul>
+<li>不能修改成员变量</li>
+<li>不能调用非const成员函数</li>
+<li>const类对象只能调用const成员函数</li>
+<li>const不能与static同时使用. const其实是用于修饰this指针, 即this指向的内容不可修改. 但static修饰的静态成员是类的而不是类对象的, 不含有this指针. 所以const和static不能共用.</li>
+</ul>
+<p>另外, 构造函数和析构函数也是成员函数, 但不能使用const修饰, 因为两者都是在对成员变量修改.</p>
+<h3 id="修饰类对象"><a href="#修饰类对象" class="headerlink" title="修饰类对象"></a>修饰类对象</h3><ul>
+<li>对象的任何成员不能被修改</li>
+<li>只能调用const成员函数</li>
+</ul>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>const</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++类型转换</title>
+    <url>/2019/12/01/C-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</url>
+    <content><![CDATA[<p>当运算符的操作数具有不同的数据类型时, C++会自动将它们按照一定的规则转换为相同的数据类型. 理解这些规则将有助于程序员防止一些细微的错误蔓延到自己的程序中.</p>
+<h2 id="基本数据类型隐式转换"><a href="#基本数据类型隐式转换" class="headerlink" title="基本数据类型隐式转换"></a>基本数据类型隐式转换</h2><p>简言之, 基本数据类型的隐式转换遵循的规则是基本数据类型的等级.</p>
+<a id="more"></a>
+
+<p>从高到低的基本数据类型的等级排序如下:</p>
+<table>
+<thead>
+<tr>
+<th align="left">基本数据类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">long double</td>
+</tr>
+<tr>
+<td align="left">double</td>
+</tr>
+<tr>
+<td align="left">float</td>
+</tr>
+<tr>
+<td align="left">unsigned long long int</td>
+</tr>
+<tr>
+<td align="left">long long int</td>
+</tr>
+<tr>
+<td align="left">unsigned long int</td>
+</tr>
+<tr>
+<td align="left">long int</td>
+</tr>
+<tr>
+<td align="left">unsigned int</td>
+</tr>
+<tr>
+<td align="left">int</td>
+</tr>
+</tbody></table>
+<p>从上表可以看出, 数据类型越宽等级越高. 所以上述等级排序存在一个例外: 当 int 和 long int 的大小相同时, 在这种情况下, unsigned int 将超越 long int, 因为它可以保存更高的值.</p>
+<p>具体规则:</p>
+<ul>
+<li>char, short 和 unsigned short 值自动升级为 int 值. 即无论何时在数学表达式中使用这些数据类型的值, 它们都将自动升级为 int 类型. 这也是为什么这几个类型不在上述等级排序中.</li>
+<li>当运算符使用不同数据类型的两个值时, 较低排名的值将被升级为较高排名值的类型.</li>
+<li>当表达式的最终值分配给变量时, 它将被转换为该变量的数据类型.</li>
+</ul>
+<p>需要注意的是, 隐式转换不仅有升级(一种数据类型被转换为更髙的数据类型), 也有降级(一种数据类型被转换为更低的数据类型). 比如:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">double</span> y = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// x被赋值为3，y仍然保留3.14</span></span><br><span class="line"><span class="keyword">int</span> x = y;</span><br></pre></td></tr></table></figure>
+
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>数据类型的转换应该是尽量被避免的. 但如果避无可避, 应该使用显示类型转换, 也就是强制类型转换.</p>
+<p>强制类型转换有 C 风格和 C++ 风格.</p>
+<p>C 风格强制类型转换形如:</p>
+<blockquote>
+<p>(type)expression</p>
+</blockquote>
+<p>C 风格强制类型转换存在下面两个两个方面的不足, 是不推荐的使用的.</p>
+<ul>
+<li>可以在任意类型之间转换, 但不区分转换类型之间的差异. 比如将指向 const 对象的指针转换成指向非 const 对象的指针, 或者将指向基类对象的指针转换成指向派生类对象的指针.</li>
+<li>不易查找. 比如在存量代码中改变转换的类型, 无法快速找出已存在的类型转换.</li>
+</ul>
+<p>而 C++ 风格的强制类型转换可以弥补 C 风格的不足.</p>
+<p>C++ 提供了下面四种类型转换.</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>static_cast</td>
+<td>转换数据类型, 类的上下行转换</td>
+</tr>
+<tr>
+<td>const_cast</td>
+<td>去除指针或引用的const属性</td>
+</tr>
+<tr>
+<td>dynamic_cast</td>
+<td>子类和父类之间的多态类型转换</td>
+</tr>
+<tr>
+<td>reinterpreter_cast</td>
+<td>重新解释类型转换</td>
+</tr>
+</tbody></table>
+<h3 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h3><ul>
+<li>转换数据类型, 由于没有运行时类型检查来保证转换的安全性, 不安全</li>
+<li>类的上下行转换, 由于没有运行时类型检查, 下行转换不安全</li>
+<li>static_cast不能转换掉原有类型的const, volatile, 或者 __unaligned 属性</li>
+</ul>
+<h3 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h3><ul>
+<li>转化常量指针为非常量的指针, 并且仍然指向原来的对象</li>
+<li>转化常量引用为非常量的引用, 并且仍然指向原来的对象</li>
+<li>const_cast 一般用于修改指针, 如 const int *ptr 形式</li>
+</ul>
+<h3 id="dynamic-cast"><a href="#dynamic-cast" class="headerlink" title="dynamic_cast"></a>dynamic_cast</h3><p>安全的上行转换(子类到基类的转换)和下行转换(基类到子类的转换).</p>
+<p>dynami_cast 在程序运行时对类型转换的”运行期类型信息”(Runtime type information, RTTI)进行了检查，是使用安全的: 转换成功则返回的是指向类的指针或引用，转换失败则返回NULL.</p>
+<h3 id="reinterpreter-cast"><a href="#reinterpreter-cast" class="headerlink" title="reinterpreter_cast"></a>reinterpreter_cast</h3><p>行无关类型的转换. 用在任意的指针间的转换, 任意引用间的转换, 指针和足够大的整型之间的转换, 整型到指针的转换.</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>类型转换</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++11智能指针</title>
+    <url>/2019/11/09/C-11%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<p>智能指针是使用RAII方法对普通指针进行的封装, 所以智能指针实质是对象, 行为表现是指针.</p>
+<p>RAII, Resource Acquisition Is Initialization, 资源获取就是初始化. RAII是一种管理资源、避免泄漏的惯用法. 通常的做法是对于一个对象而言, 我们在构造函数的时候申请空间, 而在析构函数(在离开作用域时调用)的时候释放空间.</p>
+<p>使用智能指针可以方便的管理堆内存, 避免使用普通指针容易导致的堆内存未释放或二次释放等问题.</p>
+<p>C++智能指针在C++11前是<code>std::auto_ptr</code>, C++11后是<code>std::shared_ptr</code>/<code>std::unique_ptr</code>/<code>std::weak_ptr</code>, 使用它们需要包含头文件<code>&lt;memory&gt;</code>.</p>
+<a id="more"></a>
+
+<h2 id="std-auto-ptr"><a href="#std-auto-ptr" class="headerlink" title="std::auto_ptr"></a><code>std::auto_ptr</code></h2><p><code>std::auto_ptr</code>是C++11前提供的智能指针, 但从C++11开始, <code>std::auto_ptr</code>开始被弃用, 被<code>std::unique_ptr</code>替代.</p>
+<p><code>std::auto_ptr</code>的问题在于允许隐式的所有权转让, 容易导致不易发现的各种错误, 比如空指针访问.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">auto_ptr</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; ps1(<span class="keyword">new</span> <span class="built_in">std</span>::<span class="built_in">string</span>(<span class="string">"hello world"</span>));</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">auto_ptr</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; ps2;</span><br><span class="line">ps2 = ps1;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ps1;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>ps2 = ps1</code>后<code>ps1</code>的资源所有权已经释放, 不再指向任何内容, 后面再访问<code>ps1</code>相当于在访问一个空指针.</p>
+<h2 id="std-unique-ptr"><a href="#std-unique-ptr" class="headerlink" title="std::unique_ptr"></a><code>std::unique_ptr</code></h2><p><code>std::uniqur_ptr</code>在<code>std::auto_ptr</code>的基础上禁止了拷贝和赋值, 这样上述<code>std::auto_ptr</code>中的问题就不存在了, 因为在编译阶段就会报错.</p>
+<p>另外, 容器不支持保存<code>std::auto_ptr</code>, 但可以支持保存<code>std::uniqur_ptr</code>.</p>
+<p><code>std::uniqur_ptr</code>是应该优先选用的智能指针.</p>
+<h2 id="std-shared-ptr"><a href="#std-shared-ptr" class="headerlink" title="std::shared_ptr"></a><code>std::shared_ptr</code></h2><p><code>std::shared_ptr</code>使用引用计数, 多个指针对象可以指向相同的内存. 每次<code>std::shared_ptr</code>的拷贝, 内部引用计数加1; 每次<code>std::shared_ptr</code>的析构, 内部引用计数减1; 当引用计数减为0时, 自动释放指向的内存. <code>std::shared_ptr</code>内部引用计数是线程安全的, 但指向内存不是, 所以多线程使用<code>std::shared_ptr</code>还是需要锁.</p>
+<ul>
+<li>注意不要使用同一个原始指针初始化多个<code>std::shared_ptr</code>, 否则会造成同一内存的二次释放</li>
+<li>注意避免循环引用，循环引用会导致堆内存无法正确释放，导致内存泄漏. 这是<code>std::shared_ptr</code>的最大的陷阱.</li>
+<li>另外, <code>std::shared_ptr</code>使用的引用计数是增加了内存消耗和复杂性的, 所以能用<code>std::unique_ptr</code>时建议不要使用<code>std::shared_ptr</code>.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>智能指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客添加图片</title>
+    <url>/2019/11/08/Hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<blockquote>
+<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页</p>
+</blockquote>
+<p>对于在 Hexo 博客中添加图片,  按照 <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo文档</a> 推荐的方法, 操作大致如下:</p>
+<ul>
+<li>设置站点配置<code>_config.yml</code>: 将<code>post_asset_folder: false</code>改为<code>post_asset_folder: true</code>.</li>
+<li>安装插件: <code>npm install hexo-asset-image --save</code>.</li>
+<li>生成博客: 运行<code>hexo n &quot;your-title&quot;</code>, 生成<code>your-title.md</code>博文时就会在<code>/source/_posts</code>目录下生成<code>your-title</code>的文件夹, 将你想在<code>your-title</code>博文中插入的照片放置到这个同名文件夹中即可, 图片的命名随意.</li>
+<li>添加图片: 在需要添加图片的位置写入图片的链接地址: <code>![your-image-desc](your-image-name.your-image-format)</code>.</li>
+</ul>
+<a id="more"></a>
+
+<p>另外一种图片存放路径是<code>source/images</code>. 但此时访问图片的方式是<code>![your-image-desc](/images/your-image-name.your-image-format)</code></p>
+<p>但如果这样, 当需要在博文中插入一张截图时, 还需要先将截图保存为此目录下的文件, 再在博文中手工添加图片的链接地址.</p>
+<p>有没有更快捷的方法?</p>
+<p>答案是<strong>有</strong>: 在截图工具将截图复制到剪切板后, 在博文中粘贴一下, 图片文件自动生成, 图片链接地址也自动生成.</p>
+<p>如果 Hexo 博文是在<code>VS Code</code>中完成的, 通过对<code>Paste Image</code>扩展进行一定的配置就可以实现图片的方便插入.</p>
+<blockquote>
+<p>安装<code>Paste Image</code>在<code>VS Code</code>的应用商店中搜索安装即可. 另外 Linux 环境可能会提示安装<code>xclip</code>, 比如<code>sudo aptitude install xclip</code>.</p>
+</blockquote>
+<ul>
+<li><p>配置基本路径. 图片的链接路径中不体现的路径信息. 比如 VS Code 打开是 Hexo 的工程, 图片是存在<code>source/images</code>中, 则配置<code>${projectRoot}/source</code>.<br><img src="/images/20191109T004150.933.png" alt="base-path"></p>
+</li>
+<li><p>配置图片文件名格式. 名称是由时间组成的, 但格式可自定义.<br><img src="/images/20191109T005128.154.png" alt="file-name"></p>
+</li>
+<li><p>配置图片保存路径.<br><img src="/images/20191109T005753.953.png" alt="paste-path"></p>
+</li>
+<li><p>配置图片链接前缀. 如果图片保存在<code>source/images</code>中, 图片链接路径最前面需要<code>/</code>.<br><img src="/images/20191109T005926.235.png" alt="paste-prefix"></p>
+</li>
+</ul>
+<p>按照上述配置以后, 截图保存到剪贴板后, 直接在博文中<code>Ctrl+Alt+V</code>(不同系统快捷键可能存在差异), 图片就自动保存到指定路径, 博文中自动生成了图片的访问地址.</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BASE原则</title>
+    <url>/2019/11/03/BASE%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<p>BASE：Basically Available, Soft-state, Eventually Consistent。 由 Eric Brewer 定义。</p>
+<p>CAP理论的核心是：一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，最多只能同时较好的满足两个。</p>
+<p>BASE是NoSQL数据库通常对可用性及一致性的弱要求原则:</p>
+<ul>
+<li>Basically Availble: 基本可用</li>
+<li>Soft-state: 软状态/柔性事务。 “Soft state” 可以理解为”无连接”的, 而 “Hard state” 是”面向连接”的</li>
+<li>Eventual Consistency: 最终一致性, 也是 ACID 的最终目的</li>
+</ul>
+<p><img src="/images/2019-11-04T23-58-38.png" alt="acid_base"></p>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>apt-get清理软件包</title>
+    <url>/2019/11/03/apt-get%E6%B8%85%E7%90%86%E8%BD%AF%E4%BB%B6%E5%8C%85/</url>
+    <content><![CDATA[<ul>
+<li><p>apt-get autoclean</p>
+<p>  如果你的硬盘空间不大的话，可以定期运行这个程序，将已经删除了的软件包的.deb安装文件从硬盘中删除掉。如果你仍然需要硬盘空间的话，可以试试apt-get clean，这会把你已安装的软件包的安装包也删除掉，当然多数情况下这些包没什么用了，因此这是个为硬盘腾地方的好办法。</p>
+</li>
+<li><p>apt-get clean</p>
+<p>  类似上面的命令，但它删除包缓存中的所有包。这是个很好的做法，因为多数情况下这些包没有用了。但如果你是拨号上网的话，就得重新考虑了。</p>
+</li>
+<li><p>apt-get autoremove</p>
+<p>  删除为了满足其他软件包的依赖而安装的，但现在不再需要的软件包。</p>
+</li>
+<li><p>apt-get remove 软件包名称</p>
+<p>  删除已安装的软件包（保留配置文件）。</p>
+</li>
+<li><p>apt-get –purge remove 软件包名称</p>
+<p>   删除已安装包（不保留配置文件)。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vagrant使用</title>
+    <url>/2019/10/07/vagrant%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="VirtualBox安装"><a href="#VirtualBox安装" class="headerlink" title="VirtualBox安装"></a>VirtualBox安装</h2><p>VirtualBox是Oracle开源的虚拟化系统，它支持多个平台，所以你可以到<a href="https://www.virtualbox.org/wiki/Downloads/" target="_blank" rel="noopener"><em>官方网站</em></a>下载适合你平台的VirtualBox最新版本并安装，安装过程选择默认设置即可。</p>
+<h2 id="Vagrant安装"><a href="#Vagrant安装" class="headerlink" title="Vagrant安装"></a>Vagrant安装</h2><p>在<a href="http://www.vagrantup.com/downloads.html" target="_blank" rel="noopener"><em>官方网站</em></a>下载安装包,安装过程选择默认设置即可。</p>
+<p>尽量下载最新的程序，因为VirtualBox经常升级，升级后有些接口会变化，老的Vagrant可能无法使用。</p>
+<p>检测安装是否成功的方法是，在终端命令行工具中输入vagrant，看看程序是不是已经可以运行了。如果不行，请检查一下<code>$PATH</code>里面是否包含vagrant所在的路径。</p>
+<a id="more"></a>
+
+<h2 id="Vagrant配置"><a href="#Vagrant配置" class="headerlink" title="Vagrant配置"></a>Vagrant配置</h2><p>一个打包好的操作系统在Vagrant中称为Box，即Box是一个打包好的操作系统环境。<a href="http://www.vagrantbox.es/" target="_blank" rel="noopener">vagrantbox.es</a>上面有大家熟知的大多数操作系统。建议下载后安装，这样安装过程快速。</p>
+<h2 id="建立开发环境目录"><a href="#建立开发环境目录" class="headerlink" title="建立开发环境目录"></a>建立开发环境目录</h2><p>根据自己的系统不同建立一个目录就可以。</p>
+<h2 id="下载box"><a href="#下载box" class="headerlink" title="下载box"></a>下载box</h2><p>前面讲了box是一个操作系统环境，实际上它是一个zip包，包含了Vagrant的配置信息和VirtualBox的虚拟机镜像文件.比如<a href="http://files.vagrantup.com/lucid64.box" target="_blank" rel="noopener"><em>Ubuntu lucid 64</em></a></p>
+<h2 id="添加box"><a href="#添加box" class="headerlink" title="添加box"></a>添加box</h2><p>添加box的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant box add base 远端的box地址或者本地的box文件名</span><br></pre></td></tr></table></figure>
+
+<p>base是box的名称，可以是任意的字符串，base是默认名称，主要用来标识一下你添加的box，后面的命令都是基于这个标识来操作的。</p>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant box add base http://files.vagrantup.com/lucid64.box</span><br><span class="line">vagrant box add base https://dl.dropbox.com/u/7225008/VagrantCentOS-6.3-x86_64-minimal.box</span><br><span class="line">vagrant box add base CentOS-6.3-x86_64-minimal.box</span><br><span class="line">vagrant box add <span class="string">"CentOS 6.3 x86_64 minimal"</span> CentOS-6.3-x86_64-minimal.box</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant box add base lucid64.box</span><br></pre></td></tr></table></figure>
+
+<p>安装过程的信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Downloading or copying the box...</span><br><span class="line">Extracting box...te: 47.5M/s, Estimated time remaining: --:--:--)</span><br><span class="line">Successfully added box <span class="string">'base'</span> with provider <span class="string">'virtualbox'</span>!</span><br></pre></td></tr></table></figure>
+
+<p>box中的镜像文件在window系统中应该是放到了： C:\Users\当前用户名.vagrant.d\boxes\目录下。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>初始化的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant init</span><br></pre></td></tr></table></figure>
+
+<p>如果你添加的box名称不是base，那么需要在初始化的时候指定名称，例如</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant init <span class="string">"CentOS 6.3 x86_64 minimal"</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化过程的信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">A `Vagrantfile` has been placed <span class="keyword">in</span> this directory.</span><br><span class="line">You are now ready to `vagrant up` your first virtual environment!</span><br><span class="line">Please <span class="built_in">read</span> the comments <span class="keyword">in</span> the Vagrantfile as well as documentation on `vagrantup.com` <span class="keyword">for</span> more information on using Vagrant.</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动虚拟机"><a href="#启动虚拟机" class="headerlink" title="启动虚拟机"></a>启动虚拟机</h2><p>启动虚拟机的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
+
+<p>启动过程的信息:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Bringing machine <span class="string">'default'</span> up with <span class="string">'virtualbox'</span> provider...</span><br><span class="line">[default] Importing base box <span class="string">'base'</span>...</span><br><span class="line">[default] Matching MAC address <span class="keyword">for</span> NAT networking...</span><br><span class="line">[default] Setting the name of the VM...</span><br><span class="line">[default] Clearing any previously <span class="built_in">set</span> forwarded ports...</span><br><span class="line">[default] Creating shared folders metadata...</span><br><span class="line">[default] Clearing any previously <span class="built_in">set</span> network interfaces...</span><br><span class="line">[default] Preparing network interfaces based on configuration...</span><br><span class="line">[default] Forwarding ports...</span><br><span class="line">[default] -- 22 =&gt; 2222 (adapter 1)</span><br><span class="line">[default] Booting VM...</span><br><span class="line">[default] Waiting <span class="keyword">for</span> VM to boot. This can take a few minutes.</span><br><span class="line">[default] VM booted and ready <span class="keyword">for</span> use!</span><br><span class="line">[default] Mounting shared folders...</span><br><span class="line">[default] -- /vagrant</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接到虚拟机"><a href="#连接到虚拟机" class="headerlink" title="连接到虚拟机"></a>连接到虚拟机</h2><p>上面已经启动了虚拟机，之后我们就可以通过ssh来连接到虚拟机了。比如在我的开发机中可以像这样来连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant ssh</span><br></pre></td></tr></table></figure>
+
+<p>连接到虚拟机后的信息如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Linux lucid64 2.6.32-38-server <span class="comment">#83-Ubuntu SMP Wed Jan 4 11:26:59 UTC 2012 x86_64 GNU/Linux</span></span><br><span class="line">Ubuntu 10.04.4 LTS</span><br><span class="line"></span><br><span class="line">Welcome to the Ubuntu Server!</span><br><span class="line"> * Documentation:  http://www.ubuntu.com/server/doc</span><br><span class="line">New release <span class="string">'precise'</span> available.</span><br><span class="line">Run <span class="string">'do-release-upgrade'</span> to upgrade to it.</span><br><span class="line"></span><br><span class="line">Welcome to your Vagrant-built virtual machine.</span><br><span class="line">Last login: Fri Sep 14 07:31:39 2012 from 10.0.2.2</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就可以像连接到一台服务器一样进行操作了。<br><em>Window机器不支持这样的命令，必须使用第三方客户端来进行连接，例如putty、Xshell等.</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">主机地址: 127.0.0.1</span><br><span class="line">端口: 2222</span><br><span class="line">用户名: vagrant</span><br><span class="line">密码: vagrant</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>vagrant</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vagrant box保存路径修改</title>
+    <url>/2019/10/07/vagrant-box%E4%BF%9D%E5%AD%98%E8%B7%AF%E5%BE%84%E4%BF%AE%E6%94%B9/</url>
+    <content><![CDATA[<p>vagrant add box时默认保存在目录<code>~/.vagrant.d</code>. 可以通过设置<code>VAGRANT_HOME</code>环境变量改变默认位置.</p>
+<blockquote>
+<p>VAGRANT_HOME can be set to change the directory where Vagrant stores global state. By default, this is set to ~/.vagrant.d. The Vagrant home directory is where things such as boxes are stored, so it can actually become quite large on disk.</p>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><p>Windows：</p>
+<p>用户变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setx VAGRANT_HOME<span class="string">"X:/your/path"</span></span><br></pre></td></tr></table></figure>
+
+<p>系统变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setx VAGRANT_HOME<span class="string">"X:/your/path"</span>/M</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Linux</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> VAGRANT_HOME=<span class="string">'/path/to/vagrant_home'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>vagrant</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式的分类和原则</title>
+    <url>/2019/10/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%86%E7%B1%BB%E5%92%8C%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<p>设计模式(Design Pattern)是经过分类的、代码设计经验的总结, 是为了提高代码的可重用性、可理解性和可靠性, 是某类问题的解决方案, 代表了最佳实践.</p>
+<p>面向对象的设计模式有七大基本原则：</p>
+<ul>
+<li>开闭原则(Open Closed Principle，OCP)</li>
+<li>单一职责原则(Single Responsibility Principle, SRP)</li>
+<li>里氏代换原则(Liskov Substitution Principle，LSP)</li>
+<li>依赖倒转原则(Dependency Inversion Principle，DIP)</li>
+<li>接口隔离原则(Interface Segregation Principle，ISP)</li>
+<li>合成/聚合复用原则(Composite/Aggregate Reuse Principle，CARP)</li>
+<li>最少知识原则(Least Knowledge Principle，LKP)或者迪米特法则(Law of Demeter，LOD)</li>
+</ul>
+<p>设计模式共有23种, 按类型分为三大类：</p>
+<ul>
+<li>创建型模式</li>
+<li>结构型模式</li>
+<li>行为型模式.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h3><ul>
+<li>工厂方法模式</li>
+<li>抽象工厂模式</li>
+<li>单例模式</li>
+<li>建造者模式</li>
+<li>原型模式</li>
+</ul>
+<h3 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h3><ul>
+<li>适配器模式</li>
+<li>装饰器模式</li>
+<li>代理模式</li>
+<li>外观模式</li>
+<li>桥接模式</li>
+<li>组合模式</li>
+<li>享元模式</li>
+</ul>
+<h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h3><ul>
+<li>策略模式</li>
+<li>模板方法模式</li>
+<li>观察者模式</li>
+<li>迭代子模式</li>
+<li>责任链模式</li>
+<li>命令模式</li>
+<li>备忘录模式</li>
+<li>状态模式</li>
+<li>访问者模式</li>
+<li>中介者模式</li>
+<li>解释器模式</li>
+</ul>
+<p><strong>其实还有两类：<em>并发型模式</em> 和 <em>线程池模式</em>。</strong></p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><p>开闭原则就是说<code>对扩展开放，对修改关闭</code>。<br>在程序需要进行拓展的时候，不能去修改原有的代码，而是要扩展原有代码，实现一个热插拔的效果。<br>所以一句话概括就是：为了使程序的扩展性好，易于维护和升级。<br>想要达到这样的效果，我们需要使用接口和抽象类等，后面的具体设计中我们会提到这点。</p>
+<h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><p>不要存在多于一个导致类变更的原因，也就是说每个类应该实现单一的职责，如若不然，就应该把类拆分。</p>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h3><p>里氏代换原则(Liskov Substitution Principle, LSP)面向对象设计的基本原则之一。</p>
+<blockquote>
+<p>里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。</p>
+</blockquote>
+<p>LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。</p>
+<p>里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p>
+<p>里氏替换原则中，子类对父类的方法尽量不要重写和重载。因为父类代表了定义好的结构，通过这个规范的接口与外界交互，子类不应该随便破坏它。</p>
+<h3 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h3><p>这个是开闭原则的基础，具体内容：</p>
+<blockquote>
+<p>面向接口编程，依赖于抽象而不依赖于具体。写代码时用到具体类时，不与具体类交互，而与具体类的上层接口交互。</p>
+</blockquote>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><p>这个原则的意思是：</p>
+<blockquote>
+<p>每个接口中不存在子类用不到却必须实现的方法，如果不然，就要将接口拆分。使用多个隔离的接口，比使用单个接口(多个接口方法集合到一个的接口)要好。</p>
+</blockquote>
+<h3 id="迪米特法则-最少知道原则"><a href="#迪米特法则-最少知道原则" class="headerlink" title="迪米特法则(最少知道原则)"></a>迪米特法则(最少知道原则)</h3><p>就是说：</p>
+<blockquote>
+<p>一个类对自己依赖的类知道的越少越好。也就是说无论被依赖的类多么复杂，都应该将逻辑封装在方法的内部，通过public方法提供给外部。这样当被依赖的类变化时，才能最小的影响该类。</p>
+</blockquote>
+<p>最少知道原则的另一个表达方式是：只与直接的朋友通信。<br>类之间只要有耦合关系，就叫朋友关系。耦合分为依赖、关联、聚合、组合等。<br>我们称出现为成员变量、方法参数、方法返回值中的类为直接朋友。局部变量、临时变量则不是直接的朋友。我们要求陌生的类不要作为局部变量出现在类中。</p>
+<h3 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a>合成复用原则</h3><p>合成复用原则是:</p>
+<blockquote>
+<p>尽量首先使用合成/聚合的方式，而不是使用继承。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CAP定理</title>
+    <url>/2019/10/04/CAP%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<p>在计算机科学中, CAP定理（CAP theorem）, 又被称作 布鲁尔定理（Brewer’s theorem）, 它指出对于一个分布式计算系统来说，不可能同时满足以下三点:</p>
+<ul>
+<li>一致性(Consistency) (所有节点在同一时间具有相同的数据)</li>
+<li>可用性(Availability) (保证每个请求不管成功或者失败都有响应)</li>
+<li>分隔容忍(Partition tolerance) (系统中任意信息的丢失或失败不会影响系统的继续运作)</li>
+</ul>
+<p>CAP理论的核心是：一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，最多只能同时较好的满足两个。</p>
+<p>因此，根据 CAP 原理将 NoSQL 数据库分成了满足 CA 原则、满足 CP 原则和满足 AP 原则三大类：</p>
+<ul>
+<li>CA - 单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大。</li>
+<li>CP - 满足一致性，分区容忍性的系统，通常性能不是特别高。</li>
+<li>AP - 满足可用性，分区容忍性的系统，通常可能对一致性要求低一些。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>架构</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask使用https</title>
+    <url>/2019/10/04/Flask%E4%BD%BF%E7%94%A8https/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flask在run时可以通过参数ssl_context指定证书来使得运行的web app使用较为安全的协议https.</p>
+<h2 id="安装pyOpenSSL"><a href="#安装pyOpenSSL" class="headerlink" title="安装pyOpenSSL"></a>安装pyOpenSSL</h2><p>pyOpenSSL使Python的openssl库.<br>通过pip安装:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pyOpenSSL</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="默认证书"><a href="#默认证书" class="headerlink" title="默认证书"></a>默认证书</h2><p>pyOpenSSL安装完成后就可以使用默认证书将Flask切换为https.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.run(<span class="string">'0.0.0.0'</span>, debug=<span class="literal">True</span>, port=<span class="number">5000</span>, ssl_context=<span class="string">'adhoc'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>ssl_context</strong>参数指明使用的证书, <strong>adhoc</strong>是默认证书, 是pyOpenSSL自带的.</p>
+<h2 id="自定义证书"><a href="#自定义证书" class="headerlink" title="自定义证书"></a>自定义证书</h2><h3 id="Generate-a-private-key"><a href="#Generate-a-private-key" class="headerlink" title="Generate a private key"></a>Generate a private key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl genrsa -des3 -out server.key 1024</span><br></pre></td></tr></table></figure>
+
+<h3 id="Generate-a-CSR"><a href="#Generate-a-CSR" class="headerlink" title="Generate a CSR"></a>Generate a CSR</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -new -key server.key -out server.csr</span><br></pre></td></tr></table></figure>
+
+<h3 id="Remove-Passphrase-from-key"><a href="#Remove-Passphrase-from-key" class="headerlink" title="Remove Passphrase from key"></a>Remove Passphrase from key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp server.key server.key.org</span><br><span class="line">openssl rsa -<span class="keyword">in</span> server.key.org -out server.key</span><br></pre></td></tr></table></figure>
+
+<h3 id="Generate-self-signed-certificate"><a href="#Generate-self-signed-certificate" class="headerlink" title="Generate self signed certificate"></a>Generate self signed certificate</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl x509 -req -days 3650 -<span class="keyword">in</span> server.csr -signkey server.key -out server.crt</span><br></pre></td></tr></table></figure>
+
+<p><strong>days</strong>是指证书有效时间, <strong>-days 3650</strong>即证书有效期是3650天.</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.run(<span class="string">'0.0.0.0'</span>, debug=<span class="literal">True</span>, port=<span class="number">5000</span>, ssl_context=(<span class="string">'server.crt'</span>, <span class="string">'server.key'</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>ssl_context</strong>中配置的crt和key文件使用绝对路径或相对路径.</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cout的格式化</title>
+    <url>/2019/10/04/cout%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
+    <content><![CDATA[<p>STL cout的格式化收集整理如下, 以便查阅.</p>
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p>cout是STL库提供的一个iostream实例，拥有ios_base基类的全部函数和成员数据.<br>进行格式化操作可以直接利用setf/unsetf函数和flags函数.</p>
+<blockquote>
+<p>cout维护一个当前的格式状态, setf/unsetf函数是在当前的格式状态上追加或删除指定的格式, flags则是将当前格式状态全部替换为指定的格式。</p>
+</blockquote>
+<p>cout为这个函数提供了如下参数（可选格式）：</p>
+<ul>
+<li>ios::dec            以10进制表示整数</li>
+<li>ios::hex            以16进制表示整数</li>
+<li>ios::oct            以8进制表示整数</li>
+<li>ios::showbase       为整数添加一个表示其进制的前缀</li>
+<li>ios::internal       在符号位和数值的中间插入需要数量的填充字符以使串两端对齐</li>
+<li>ios::left           在串的末尾插入填充字符以使串居左对齐</li>
+<li>ios::right          在串的前面插入填充字符以使串居右对齐</li>
+<li>ios::boolalpha      将bool类型的值以true或flase表示，而不是1或0</li>
+<li>ios::fixed          将符点数按照普通定点格式处理（非科学计数法）</li>
+<li>ios::scientific     将符点数按照科学计数法处理（带指数域）</li>
+<li>ios::showpoint      在浮点数表示的小数中强制插入小数点（默认情况是浮点数表示的整数不显示- 小数点）</li>
+<li>ios::showpos        强制在正数前添加+号</li>
+<li>ios::skipws         忽略前导的空格（主要用于输入流，如cin）</li>
+<li>ios::unitbuf        在插入（每次输出）操作后清空缓存</li>
+<li>ios::uppercase      强制大写字母</li>
+</ul>
+<a id="more"></a>
+
+<p>以上每一种格式都占用独立的一位，因此可以用“|”（位或）运算符组合使用。<br>调用setf/unsetf或flags设置格式一般按如下方式进行：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cout</span>.setf(ios::right | ios::hex);           <span class="comment">//设置16进制右对齐</span></span><br><span class="line"><span class="built_in">cout</span>.setf(ios::right, ios::adjustfield);    <span class="comment">//取消其它对齐，设置为右对齐</span></span><br></pre></td></tr></table></figure>
+
+<p>setf可接受一个或两个参数，一个参数的版本为设置指定的格式，后一个参数指定了删除的格式。</p>
+<p>三个已定义的组合格式为：</p>
+<ul>
+<li>ios::adjustfield    对齐格式的组合位</li>
+<li>ios::basefield      进制的组合位</li>
+<li>ios::floatfield     浮点表示方式的组合位</li>
+</ul>
+<p>设置格式之后，下面所有使用cout进行的输出都会按照指定的格式状态执行。<br>但是如果在一次输出过程中需要混杂多种格式，使用cout的成员函数来处理就显得很不方便了。</p>
+<p>STL另提供了一套<em>iomanip</em>库可以满足这种使用方式。<em>iomanip</em>库中将每一种格式的设置和删除都进行了函数级的同名封装，比如fixed函数，就可以将一个ostream的对象作为参数，在内部调用setf函数对其设置ios::fixed格式后再返回原对象。</p>
+<p>此外<em>iomanip</em>还提供了setiosflags、setbase、setfill、setw、setprecision等方便的格式控制函数，下文会逐一进行介绍。大多数示例代码都会使用到<em>iomanip</em>，因此默认包含的头文件均为：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>将输出内容按指定的宽度对齐，需要用到ios::right、ios::left、ios::internal和iomanip里的setw。</p>
+<p>其中 setw用于指定要输出内容的对齐宽度。以下两段代码的结果完全相同，前面是一个浮点数-456.98，后面紧跟着一个字符串“The End”以及换行符“endl”。</p>
+<p><em>代码一：</em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>.flags(ios::left); <span class="comment">//左对齐</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>.flags(ios::internal); <span class="comment">//两端对齐</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>.flags(ios::right); <span class="comment">//右对齐</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>代码二：</em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; left &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//左对齐</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; internal &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//两端对齐</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; right &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">-456.98</span> &lt;&lt; <span class="string">"The End"</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//右对齐</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-456.98 The End</span><br><span class="line">- 456.98The End</span><br><span class="line">-456.98The End</span><br></pre></td></tr></table></figure>
+
+<p>这里要额外说明的一点是，setw函数会用当前的填充字符控制对齐位置，默认的填充字符是空格。</p>
+<p>可以通过<code>&lt;iomanip&gt;</code>的setfill来设置填充字符，比如下面的代码用字符“0”作为填充字符：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setfill(<span class="string">'0'</span>) &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; <span class="number">45698</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： 0000045698</p>
+<h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>输出整数的格式有按不同进制数出：ios::hex（16进制）, ios::dec（10进制）, ios::oct（ 8进制）, 也可强制其输出符号（正数也加上“+”号前缀），对于16进制的输出还可配合<strong>ios::uppercase</strong>使所有字母以大写表示。</p>
+<p>代码示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>.setf(ios::showpos | ios::uppercase);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; hex &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dec &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; oct &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>.unsetf(ios::showpos | ios::uppercase);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; hex &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dec &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; oct &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; <span class="number">12</span> &lt;&lt; setw(<span class="number">12</span>) &lt;&lt; <span class="number">-12</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： C FFFFFFF4 +12 -12 14 37777777764 c fffffff4 12 -12 14 37777777764</p>
+<p>利用<code>&lt;iomanip&gt;</code>的setbase函数同样可以设置整数的三种进制，参数分别为8、10和16，但使用起来比上面的方法还更复杂一些，除非是特殊的代码规范要求（有些规范要求避免将常量直接作为表达式），一般不建议使用setbase。</p>
+<p>此外，还可以利用ios::showbase来为整数的前面加一个表示进制的前缀，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; showbase &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; hex &lt;&lt; <span class="number">32</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; oct &lt;&lt; <span class="number">32</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; noshowbase &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; hex &lt;&lt; <span class="number">32</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; oct &lt;&lt; <span class="number">32</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： 0x20 040 20 40</p>
+<p>上面代码中的showbase/noshobase也可以用cout的setf来代替，其结果是完全相同的：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>.setf(ios::showbase);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; hex &lt;&lt; <span class="number">32</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; oct &lt;&lt; <span class="number">32</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>.unsetf(ios::showbase);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; hex &lt;&lt; <span class="number">32</span> &lt;&lt; setw(<span class="number">4</span>) &lt;&lt; oct &lt;&lt; <span class="number">32</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小数"><a href="#小数" class="headerlink" title="小数"></a>小数</h2><p>小数可分为两种格式类型，一种是定点表示“ios::fixed”（不带指数域），另一种是科学计数法表示“ios::scientific”（带指数域）。与<code>&lt;iomanip&gt;</code>的setprecision配合使用，可以表示指定小数点后面的保留位数（四舍五入）。</p>
+<p>示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>.setf(ios::fixed);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">0</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">1</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>.setf(ios::scientific, ios::floatfield);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">0</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">1</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">3</span>) &lt;&lt; <span class="number">12.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： 12 12.1 12.05 12.050 1.205000e+001 1.2e+001 1.21e+001 1.205e+001</p>
+<p>需要注意的是，有时会因为机器的精度问题导致四舍五入的结果不正确。这种问题一般需要手动修正，见如下代码示例：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">1</span>) &lt;&lt; <span class="number">2.05</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setprecision(<span class="number">1</span>) &lt;&lt; <span class="number">2.05</span> + <span class="number">1e-8</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： 2.0 2.1</p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>字符串的输出处理主要是对齐，这一点在第二部分已经介绍过了，下面主要介绍字符串的输入方法。</p>
+<p>为了方便起见，我们使用<code>&lt;string&gt;</code>库。在输入字符串时，可以利用<code>&lt;string&gt;</code>库提供的getline函数读取整行数据。</p>
+<p>getline函数有两个版本:</p>
+<p>第一个版本有两个参数，第一个参数指定输入流（比如cin），第二个参数指定一个string对象。getline会读取屏幕上输入的字符，直到遇到换行符“\n”为止；</p>
+<p>第二个版本有三个参数，前两个与第一个版本相同，第三个参数为指定的结束字符。</p>
+<p>注意，getline不会读入默认或指定的结束字符，但在调用之后读取的位置已经跳过结束字符。调用示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str1, str2;</span><br><span class="line">    getline(<span class="built_in">cin</span>, str1);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; str2;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; str1 &lt;&lt; <span class="built_in">endl</span> &lt;&lt; str2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入： abc abc</p>
+<p>结果： abc abc</p>
+<h2 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h2><p>由于调用系统函数在屏幕上逐个显示字符是很慢的，因此cin/cout为了加快速度使用缓冲区技术，粗略的讲就是暂时不输出指定的字符，而是存放在缓冲区中，在合适的时机一次性输出到屏幕上。</p>
+<p>如果单纯使用C++的输入/输出流来操作字符是不存在同步的问题的，但是如果要和C标准库的stdio库函数混合使用就必须要小心的处理缓冲区了。</p>
+<p>如果要与scanf和printf联合使用，务必在调用cout前加上cout.sync_with_stdio()，设置与stdio同步，否则输出的数据顺序会发生混乱。</p>
+<p>flush和endl都会将当前缓冲区中的内容立即写入到屏幕上，而unitbuf/nounitbuf可以禁止或启用缓冲区。</p>
+<p>示例代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="number">123</span> &lt;&lt; flush &lt;&lt; <span class="number">456</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; unitbuf &lt;&lt; <span class="number">123</span> &lt;&lt; nounitbuf &lt;&lt; <span class="number">456</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果： 123456 123456</p>
+<h2 id="综合使用"><a href="#综合使用" class="headerlink" title="综合使用"></a>综合使用</h2><p>示例代码：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">COMMODITY</span> &#123;</span> <span class="built_in">string</span> Name; <span class="keyword">int</span> Id; <span class="keyword">int</span> Cnt; <span class="keyword">double</span> Price; &#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    COMMODITY cmd[] = &#123;</span><br><span class="line">        &#123;<span class="string">"Fruit"</span>, <span class="number">0x101</span>, <span class="number">50</span>, <span class="number">5.268</span>&#125;,</span><br><span class="line">        &#123;<span class="string">"Juice"</span>, <span class="number">0x102</span>, <span class="number">20</span>, <span class="number">8.729</span>&#125;,</span><br><span class="line">        &#123;<span class="string">"Meat"</span>, <span class="number">0x104</span>, <span class="number">30</span>, <span class="number">10.133</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; left &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; <span class="string">"NAME"</span> &lt;&lt; right &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; <span class="string">"ID"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; right &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; <span class="string">"COUNT"</span> &lt;&lt; right &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; <span class="string">"PRICE"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(cmd) / <span class="keyword">sizeof</span>(cmd[<span class="number">0</span>]); ++i) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; left &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; cmd[i].Name;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; right &lt;&lt; hex &lt;&lt; showbase &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; cmd[i].Id;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; dec &lt;&lt; noshowbase &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; cmd[i].Cnt;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; setw(<span class="number">8</span>) &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; cmd[i].Price &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NAME          ID   COUNT   PRICE</span><br><span class="line">Fruit      0x101      50    5.27</span><br><span class="line">Juice      0x102      20    8.73</span><br><span class="line">Meat       0x104      30   10.13</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树前中后序遍历</title>
+    <url>/2019/10/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E4%B8%AD%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<ul>
+<li>二叉树的前中后序是相对于<strong>根节点</strong>来说的</li>
+<li>前根序遍历：先遍历根结点，然后遍历左子树，最后遍历右子树。<blockquote>
+<p>ABDHECFG</p>
+</blockquote>
+</li>
+<li>中根序遍历：先遍历左子树，然后遍历根结点，最后遍历右子树。<blockquote>
+<p>HDBEAFCG</p>
+</blockquote>
+</li>
+<li>后根序遍历：先遍历左子树，然后遍历右子树，最后遍历根节点。<blockquote>
+<p>HDEBFGCA</p>
+</blockquote>
+</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><p>已知一棵二叉树的前根序序列和中根序序列，构造该二叉树的过程如下：</p>
+<ul>
+<li>根据前根序序列的第一个元素建立根结点；</li>
+<li>在中根序序列中找到该元素，确定根结点的左右子树的中根序序列；</li>
+<li>在前根序序列中确定左右子树的前根序序列；</li>
+<li>由左子树的前根序序列和中根序序列建立左子树；</li>
+<li>由右子树的前根序序列和中根序序列建立右子树。</li>
+</ul>
+</li>
+<li><p>已知一棵二叉树的后根序序列和中根序序列，构造该二叉树的过程如下：</p>
+<ul>
+<li>根据后根序序列的最后一个元素建立根结点；</li>
+<li>在中根序序列中找到该元素，确定根结点的左右子树的中根序序列；</li>
+<li>在后根序序列中确定左右子树的后根序序列；</li>
+<li>由左子树的后根序序列和中根序序列建立左子树；</li>
+<li>由右子树的后根序序列和中根序序列建立右子树。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python调用系统命令</title>
+    <url>/2019/10/04/Python%E8%B0%83%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="os-system"><a href="#os-system" class="headerlink" title="os.system"></a>os.system</h2><p>该方法在调用完shell脚本后,返回一个16位的二进制数.<br>低位为杀死所调用脚本的信号号码,高位为脚本的退出状态码.</p>
+<blockquote>
+<p>脚本中”exit 1”的代码执行后, os.system函数返回值的高位数则是1;<br>如果低位数是0的情况下, 则函数的返回值是0x100, 换算为10进制得到256.</p>
+</blockquote>
+<p>如果我们需要获得os.system的正确返回值,那使用位移运算可以还原返回值:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>n = os.system(test.sh)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>n &gt;&gt; <span class="number">8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>这是最简单的一种方法, 特点是执行的时候程序会打出cmd在linux上执行的信息.<br>使用前需要import os.</p>
+<blockquote>
+<p>os.system(“ls”)  仅仅在一个子终端运行系统命令, 而不能获取命令执行后的返回信息</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="os-Popen"><a href="#os-Popen" class="headerlink" title="os.Popen"></a>os.Popen</h2><p>这种调用方式是通过管道的方式来实现,函数返回一个file-like的对象,里面的内容是脚本输出的内容(可简单理解为echo输出的内容).</p>
+<p>python调用Shell脚本,有两种方法:</p>
+<ul>
+<li>os.system(cmd)</li>
+<li>os.popen(cmd),</li>
+</ul>
+<p>前者返回值是脚本的退出状态码, 后者的返回值是脚本执行过程中的输出内容. 实际使用时视需求情况而选择。<br>明显地,像调用”ls”这样的shell命令,应该使用popen的方法来获得内容</p>
+<blockquote>
+<p>popen(command [, mode=’r’ [, bufsize]]) -&gt; pipe</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tmp = os.popen(<span class="string">'ls *.py'</span>).readlines()</span><br></pre></td></tr></table></figure>
+
+<h2 id="subprocess-Popen"><a href="#subprocess-Popen" class="headerlink" title="subprocess.Popen"></a>subprocess.Popen</h2><p>现在大部分人都喜欢使用Popen。Popen方法不会打印出cmd在linux上执行的信息。的确，Popen非常强大，支持多种参数和模式。使用前需要:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> Popen, PIPE</span><br></pre></td></tr></table></figure>
+
+<p>但是Popen函数有一个缺陷，就是它是一个阻塞的方法。如果运行cmd时产生的内容非常多，函数非常容易阻塞住。解决办法是不使用wait()方法，但是也不能获得执行的返回值了。</p>
+<p>Popen原型是：</p>
+<blockquote>
+<p>subprocess.Popen(args, bufsize=0, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=False, shell=false)</p>
+</blockquote>
+<ul>
+<li>参数bufsize：指定缓冲。我到现在还不清楚这个参数的具体含义，望各个大牛指点。</li>
+<li>参数executable用于指定可执行程序。一般情况下我们通过args参数来设置所要运行的程序。如果将参数shell设为 True，executable将指定程序使用的shell。在windows平台下，默认的shell由COMSPEC环境变量来指定。</li>
+<li>参数stdin, stdout, stderr分别表示程序的标准输入、输出、错误句柄。他们可以是PIPE，文件描述符或文件对象，也可以设置为None，表示从父进程继承。</li>
+<li>参数preexec_fn只在Unix平台下有效，用于指定一个可执行对象（callable object），它将在子进程运行之前被调用。</li>
+<li>参数Close_sfs：在windows平台下，如果close_fds被设置为True，则新创建的子进程将不会继承父进程的输入、输出、错误管道。我们不能将close_fds设置为True同时重定向子进程的标准输入、输出与错误(stdin, stdout, stderr)。</li>
+<li>如果参数shell设为true，程序将通过shell来执行。</li>
+<li>参数cwd用于设置子进程的当前目录。</li>
+<li>参数env是字典类型，用于指定子进程的环境变量。如果env = None，子进程的环境变量将从父进程中继承。</li>
+<li>参数Universal_newlines:不同操作系统下，文本的换行符是不一样的。如：windows下用’/r/n’表示换，而Linux下用 ‘/n’。如果将此参数设置为True，Python统一把这些换行符当作’/n’来处理。</li>
+<li>参数startupinfo与createionflags只在windows下用效，它们将被传递给底层的CreateProcess()函数，用于设置子进程的一些属性，如：主窗口的外观，进程的优先级等等。</li>
+<li>subprocess.PIPE, 在创建Popen对象时，subprocess.PIPE可以初始化stdin, stdout或stderr参数，表示与子进程通信的标准流。</li>
+<li>subprocess.STDOUT, 创建Popen对象时，用于初始化stderr参数，表示将错误通过标准输出流输出。</li>
+</ul>
+<p>Popen的方法：</p>
+<ul>
+<li>Popen.poll()<br>  用于检查子进程是否已经结束。设置并返回returncode属性。</li>
+<li>Popen.wait()<br>  等待子进程结束。设置并返回returncode属性。</li>
+<li>Popen.communicate(input=None)<br>  与子进程进行交互。向stdin发送数据，或从stdout和stderr中读取数据。可选参数input指定发送到子进程的参数。 Communicate()返回一个元组：(stdoutdata, stderrdata)。注意：如果希望通过进程的stdin向其发送数据，在创建Popen对象的时候，参数stdin必须被设置为PIPE。同样，如 果希望从stdout和stderr获取数据，必须将stdout和stderr设置为PIPE。</li>
+<li>Popen.send_signal(signal)<br>  向子进程发送信号。</li>
+<li>Popen.terminate()<br>  停止(stop)子进程。在windows平台下，该方法将调用Windows API TerminateProcess（）来结束子进程。</li>
+<li>Popen.kill()<br>  杀死子进程。</li>
+<li>Popen.stdin<br>  如果在创建Popen对象是，参数stdin被设置为PIPE，Popen.stdin将返回一个文件对象用于策子进程发送指令。否则返回None。</li>
+<li>Popen.stdout<br>  如果在创建Popen对象是，参数stdout被设置为PIPE，Popen.stdout将返回一个文件对象用于策子进程发送指令。否则返回 None。</li>
+<li>Popen.stderr<br>  如果在创建Popen对象是，参数stdout被设置为PIPE，Popen.stdout将返回一个文件对象用于策子进程发送指令。否则返回 None。</li>
+<li>Popen.pid<br>  获取子进程的进程ID。</li>
+<li>Popen.returncode<br>  获取进程的返回值。如果进程还没有结束，返回None。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字节对齐</title>
+    <url>/2019/10/04/%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90/</url>
+    <content><![CDATA[<p>关于C++字节对齐收集整理如下, 以便查阅.</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>对齐跟数据在内存中的位置有关。如果一个变量的内存地址正好位于它长度的整数倍，他就被称做自然对齐。比如在32位cpu下，假设一个整型变量的地址为0x00000004，那它就是自然对齐的。</p>
+<a id="more"></a>
+
+<h2 id="为什么要字节对齐"><a href="#为什么要字节对齐" class="headerlink" title="为什么要字节对齐"></a>为什么要字节对齐</h2><p>需要字节对齐的根本原因在于CPU访问数据的效率问题。假设上面整型变量的地址不是自然对齐，比如为0x00000002，则CPU如果取它的值的话需要访问两次内存，第一次取从0x00000002-0x00000003的一个short，第二次取从0x00000004-0x00000005的一个short然后组合得到所要的数据，如果变量在0x00000003地址上的话则要访问三次内存，第一次为char，第二次为short，第三次为char，然后组合得到整型数据。而如果变量在自然对齐位置上，则只要一次就可以取出数据。一些系统对对齐要求非常严格，比如sparc系统，如果取未对齐的数据会发生错误，举个例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> ch[<span class="number">8</span>];</span><br><span class="line"><span class="keyword">char</span> *p = &amp;ch[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> i = *(<span class="keyword">int</span> *)p;</span><br></pre></td></tr></table></figure>
+
+<p>运行时会报segment error，而在x86上就不会出现错误，只是效率下降。</p>
+<h2 id="正确处理字节对齐"><a href="#正确处理字节对齐" class="headerlink" title="正确处理字节对齐"></a>正确处理字节对齐</h2><p>对于标准数据类型，它的地址只要是它的长度的整数倍就行了，而非标准数据类型按下面的原则对齐：</p>
+<ul>
+<li>数组  ：按照基本数据类型对齐，第一个对齐了后面的自然也就对齐了。</li>
+<li>联合  ：按其包含的长度最大的数据类型对齐。</li>
+<li>结构体：结构体中每个数据类型都要对齐。</li>
+</ul>
+<p>比如有如下一个结构体：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span> <span class="title">my_stu</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于<code>在x86下，GCC默认按4字节对齐</code>，它会在sex后面跟name后面分别填充三个和两个字节使length和整个结构体对齐。于是我们sizeof(my_stu)会得到长度为<code>20</code>，而不是15.</p>
+<h2 id="attribute-选项"><a href="#attribute-选项" class="headerlink" title="__attribute__选项"></a>__attribute__选项</h2><p>我们可以按照自己设定的对齐大小来编译程序，GNU使用__attribute__选项来设置，比如我们想让刚才的结构按一字节对齐，我们可以这样定义结构体</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">&#125;__attribute__ ((aligned (<span class="number">1</span>)));</span><br><span class="line">　　</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span> <span class="title">my_stu</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>则sizeof(my_stu)可以得到大小为15。</p>
+<p>上面的定义等同于</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">&#125;__attribute__ ((packed));</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stu</span> <span class="title">my_stu</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>__attribute__((packed))的变量或者结构体成员使用最小的对齐方式，即对变量是一字节对齐，对域（field）是位对齐.</code></p>
+<h2 id="什么时候需要设置对齐"><a href="#什么时候需要设置对齐" class="headerlink" title="什么时候需要设置对齐"></a>什么时候需要设置对齐</h2><p>在设计不同CPU下的通信协议时，或者编写硬件驱动程序时寄存器的结构这两个地方都需要按一字节对齐。即使看起来本来就自然对齐的也要使其对齐，以免不同的编译器生成的代码不一样.</p>
+<h3 id="快速理解"><a href="#快速理解" class="headerlink" title="快速理解"></a>快速理解</h3><ol>
+<li><p>什么是字节对齐？<br> 在C语言中，结构是一种复合数据类型，其构成元素既可以是基本数据类型（如int、long、float等）的变量，也可以是一些复合数据类型（如数组、结构、联合等）的数据单元。在结构中，编译器为结构的每个成员按其自然边界（alignment）分配空间。各个成员按照它们被声明的顺序在内存中顺序存储，第一个成员的地址和整个结构的地址相同。</p>
+<p> 为了使CPU能够对变量进行快速的访问,变量的起始地址应该具有某些特性,即所谓的”对齐”。比如4字节的int型,其起始地址应该位于4字节的边界上,即起始地址能够被4整除.</p>
+</li>
+<li><p>字节对齐有什么作用？<br> 字节对齐的作用不仅是便于cpu快速访问，同时合理的利用字节对齐可以有效地节省存储空间。<br> 对于32位机来说，4字节对齐能够使cpu访问速度提高，比如说一个long类型的变量，如果跨越了4字节边界存储，那么cpu要读取两次，这样效率就低了。但是在32位机中使用1字节或者2字节对齐，反而会使变量访问速度降低。所以这要考虑处理器类型，另外还得考虑编译器的类型。在vc中默认是4字节对齐的，GNU gcc 也是默认4字节对齐。</p>
+</li>
+<li><p>更改C编译器的缺省字节对齐方式<br> 在缺省情况下，C编译器为每一个变量或是数据单元按其自然对界条件分配空间。一般地，可以通过下面的方法来改变缺省的对界条件：</p>
+<ul>
+<li>使用伪指令#pragma pack (n)，C编译器将按照n个字节对齐。</li>
+<li>使用伪指令#pragma pack ()，取消自定义字节对齐方式。</li>
+</ul>
+<p>另外，还有如下的一种方式：</p>
+<ul>
+<li>_<em>attribute_</em>((aligned (n)))，让所作用的结构成员对齐在n字节自然边界上。如果  构中有成员的长度大于n，则按照最大成员的长度来对齐。</li>
+<li>_<em>attribute_</em> ((packed))，取消结构在编译过程中的优化对齐，按照实际占用字节数进行对齐。</li>
+</ul>
+</li>
+<li><p>举例说明<br><em>例1</em></p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">test</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> x1;</span><br><span class="line">    <span class="keyword">short</span> x2;</span><br><span class="line">    <span class="keyword">float</span> x3;</span><br><span class="line">    <span class="keyword">char</span> x4;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p> 由于编译器默认情况下会对这个struct作自然边界（有人说“自然对界”我觉得边界更顺口）对齐，结构的第一个成员x1，其偏移地址为0，占据了第1个字节。第二个成员x2为short类型，其起始地址必须2字节对界，因此，编译器在x2和x1之间填充了一个空字节。结构的第三个成员x3和第四个成员x4恰好落在其自然边界地址上，在它们前面不需要额外的填充字节。在test结构中，成员x3要求4字节对界，是该结构所有成员中要求的最大边界单元，因而test结构的自然对界条件为4字节，编译器在成员x4后面填充了3个空字节。整个结构所占据空间为12字节。</p>
+<p> <em>例2</em></p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1) <span class="comment">//让编译器对这个结构作1字节对齐</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">test</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> x1;</span><br><span class="line">    <span class="keyword">short</span> x2;</span><br><span class="line">    <span class="keyword">float</span> x3;</span><br><span class="line">    <span class="keyword">char</span> x4;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack() <span class="comment">//取消1字节对齐，恢复为默认4字节对齐</span></span></span><br></pre></td></tr></table></figure>
+
+<p> 这时候sizeof(struct test)的值为8。</p>
+<p> <em>例3</em></p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GNUC_PACKED __attribute__((packed))</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PACKED</span> <span class="title">test</span>  &#123;</span></span><br><span class="line">    <span class="keyword">char</span> x1;</span><br><span class="line">    <span class="keyword">short</span> x2;</span><br><span class="line">    <span class="keyword">float</span> x3;</span><br><span class="line">    <span class="keyword">char</span> x4;</span><br><span class="line">&#125;GNUC_PACKED;</span><br></pre></td></tr></table></figure>
+
+<p> 这时候sizeof(struct test)的值仍为8。</p>
+</li>
+</ol>
+<h3 id="深入理解"><a href="#深入理解" class="headerlink" title="深入理解"></a>深入理解</h3><p>什么是字节对齐,为什么要对齐</p>
+<blockquote>
+<p>现代计算机中内存空间都是按照byte划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但实际情况是在访问特定类型变量的时候经常在特定的内存地址访问，这就需要各种类型数据按照一定的规则在空间上排列，而不是顺序的一个接一个的排放，这就是对齐。</p>
+</blockquote>
+<p>对齐的作用和原因</p>
+<blockquote>
+<p>各个硬件平台对存储空间的处理上有很大的不同。一些平台对某些特定类型的数据只能从某些特定地址开始存取。比如有些架构的CPU在访问一个没有进行对齐的变量的时候会发生错误,那么在这种架构下编程必须保证字节对齐.其他平台可能没有这种情况，但是最常见的是如果不按照适合其平台要求对数据存放进行对齐，会在存取效率上带来损失。比如有些平台每次读都是从偶地址开始，如果一个int型（假设为32位系统）如果存放在偶地址开始的地方，那么一个读周期就可以读出这32bit，而如果存放在奇地址开始的地方，就需要2个读周期，并对两次读出的结果的高低字节进行拼凑才能得到该32bit数据。显然在读取效率上下降很多。</p>
+</blockquote>
+<h3 id="字节对齐对程序的影响"><a href="#字节对齐对程序的影响" class="headerlink" title="字节对齐对程序的影响"></a>字节对齐对程序的影响</h3><p>先让我们看几个例子吧(32bit,x86环境,gcc编译器):</p>
+<p>设结构体如下定义：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>现在已知32位机器上各种数据类型的长度如下:</p>
+<ul>
+<li>char:   1(有符号无符号同)</li>
+<li>short:  2(有符号无符号同)</li>
+<li>int:    4(有符号无符号同)</li>
+<li>long:   4(有符号无符号同)</li>
+<li>float:  4</li>
+<li>double: 8</li>
+</ul>
+<p>那么上面两个结构大小如何呢?</p>
+<p>结果是:</p>
+<ul>
+<li>sizeof(strcut A)值为8</li>
+<li>sizeof(struct B)的值却是12</li>
+</ul>
+<p>结构体A中包含了4字节长度的int一个，1字节长度的char一个和2字节长度的short型数据一个,B也一样;按理说A,B大小应该都是7字节。</p>
+<p>之所以出现上面的结果是因为编译器要对数据成员在空间上进行对齐。上面是按照编译器的默认设置进行对齐的结果,那么我们是不是可以改变编译器的这种默认对齐设置呢,当然可以.例如:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (2) <span class="comment">/*指定按2字节对齐*/</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack () <span class="comment">/*取消指定对齐，恢复缺省对齐*/</span></span></span><br></pre></td></tr></table></figure>
+
+<p>sizeof(struct C)值是8。</p>
+<p>修改对齐值为1：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (1) <span class="comment">/*指定按1字节对齐*/</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack () <span class="comment">/*取消指定对齐，恢复缺省对齐*/</span></span></span><br></pre></td></tr></table></figure>
+
+<p>sizeof(struct D)值为7。</p>
+<p>后面我们再讲解#pragma pack()的作用.</p>
+<h3 id="编译器对齐原则"><a href="#编译器对齐原则" class="headerlink" title="编译器对齐原则"></a>编译器对齐原则</h3><p>先让我们看四个重要的基本概念：</p>
+<ol>
+<li>数据类型自身的对齐值： 对于char型数据，其自身对齐值为1，对于short型为2，对于int,float,double类型，其自身对齐值为4，单位字节。</li>
+<li>结构体或者类的自身对齐值：其成员中自身对齐值最大的那个值。</li>
+<li>指定对齐值：#pragma pack (value)时的指定对齐值value。</li>
+<li><strong>数据成员、结构体和类的有效对齐值：自身对齐值和指定对齐值中小的那个值</strong>。</li>
+</ol>
+<p>有了这些值，我们就可以很方便的来讨论具体数据结构的成员和其自身的对齐方式。<strong>有效对齐值N是最终用来决定数据存放地址方式的值，最重要。</strong>有效对齐N，就是表示“对齐在N上”，也就是说该数据的”存放起始地址%N=0”.而数据结构中的数据变量都是按定义的先后顺序来排放的。第一个数据变量的起始地址就是数据结构的起始地址。结构体的成员变量要对齐排放，结构体本身也要根据自身的有效对齐值圆整(就是<code>结构体成员变量占用总长度需要是对结构体有效对齐值的整数倍</code>，结合下面例子理解)。这样就不能理解上面的几个例子的值了。</p>
+<p>例子分析：</p>
+<p>分析例子B；</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>假设B从地址空间0x0000开始排放。该例子中没有定义指定对齐值，在笔者环境下，该值默认为4。<br><strong>第一个成员变量b的自身对齐值是1，比指定或者默认指定对齐值4小，所以其有效对齐值为1</strong>，所以其存放地址0x0000符合0x0000%1=0.<br>第二个成员变量a，其自身对齐值为4，所以有效对齐值也为4，所以只能存放在起始地址为0x0004到0x0007这四个连续的字节空间中，复核0x0004%4=0,且紧靠第一个变量。<br>第三个变量c,自身对齐值为2，所以有效对齐值也是2，可以存放在0x0008到0x0009这两个字节空间中，符合0x0008%2=0。所以从0x0000到0x0009存放的都是B内容。</p>
+<p>再看数据结构B的自身对齐值为其变量中最大对齐值(这里是b）所以就是4，所以结构体的有效对齐值也是4。根据结构体圆整的要求，0x0009到0x0000=10字节，（10＋2）％4＝0。所以0x0000A到0x000B也为结构体B所占用。故B从0x0000到0x000B共有12个字节,sizeof(struct B)=12;</p>
+<p>其实如果就这一个就来说它已将满足字节对齐了,因为它的起始地址是0,因此肯定是对齐的,之所以在后面补充2个字节,是因为编译器为了实现结构数组的存取效率,试想如果我们定义了一个结构B的数组,那么第一个结构起始地址是0没有问题,但是第二个结构呢?按照数组的定义,数组中所有元素都是紧挨着的,如果我们不把结构的大小补充为4的整数倍,那么下一个结构的起始地址将是0x0000A,这显然不能满足结构的地址对齐了,因此我们要把结构补充成有效对齐大小的整数倍.</p>
+<p>其实诸如:对于char型数据，其自身对齐值为1，对于short型为2，对于int,float,double类型，其自身对齐值为4，这些已有类型的自身对齐值也是基于数组考虑的,只是因为这些类型的长度已知了,所以他们的自身对齐值也就已知了.</p>
+<p>同理,分析上面例子C：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (2) <span class="comment">/*指定按2字节对齐*/</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack () <span class="comment">/*取消指定对齐，恢复缺省对齐*/</span></span></span><br></pre></td></tr></table></figure>
+
+<p>第一个变量b的自身对齐值为1，指定对齐值为2，所以，其有效对齐值为1，假设C从0x0000开始，那么b存放在0x0000，符合0x0000%1=0;<br>第二个变量，自身对齐值为4，指定对齐值为2，所以有效对齐值为2，所以顺序存放在0x0002、0x0003、0x0004、0x0005四个连续字节中，符合0x0002%2=0。<br>第三个变量c的自身对齐值为2，所以有效对齐值为2，顺序存放在0x0006、0x0007中，符合0x0006%2=0。所以从0x0000到0x00007共八字节存放的是C的变量。又C的自身对齐值为4，所以C的有效对齐值为2。又8%2=0,C只占用0x0000到0x0007的八个字节。所以sizeof(struct C)=8.</p>
+<h3 id="如何修改编译器的默认对齐值"><a href="#如何修改编译器的默认对齐值" class="headerlink" title="如何修改编译器的默认对齐值"></a>如何修改编译器的默认对齐值</h3><ol>
+<li>在VC IDE中，可以这样修改：[Project]|[Settings],c/c++选项卡Category的Code Generation选项的Struct Member Alignment中修改，默认是8字节。</li>
+<li>在编码时，可以这样动态修改：#pragma pack . <em><code>注意:是pragma而不是progma.</code></em></li>
+</ol>
+<h3 id="针对字节对齐-我们在编程中如何考虑"><a href="#针对字节对齐-我们在编程中如何考虑" class="headerlink" title="针对字节对齐,我们在编程中如何考虑"></a>针对字节对齐,我们在编程中如何考虑</h3><p>如果在编程的时候要考虑节约空间的话,那么我们只需要假定结构的首地址是0,然后各个变量按照上面的原则进行排列即可,<strong>基本的原则就是把结构中的变量按照类型大小从小到大声明,尽量减少中间的填补空间.</strong><br>还有一种就是为了以空间换取时间的效率,我们显示的进行填补空间进行对齐,比如:<strong>有一种使用空间换时间做法是显式的插入reserved成员.</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> a;</span><br><span class="line">    <span class="keyword">char</span> reserved[<span class="number">3</span>];<span class="comment">//使用空间换时间</span></span><br><span class="line">    <span class="keyword">int</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>reserved成员对我们的程序没有什么意义,它只是起到填补空间以达到字节对齐的目的,当然即使不加这个成员通常编译器也会给我们自动填补对齐,我们自己加上它只是起到显式的提醒作用.</p>
+<h3 id="字节对齐可能带来的隐患"><a href="#字节对齐可能带来的隐患" class="headerlink" title="字节对齐可能带来的隐患"></a>字节对齐可能带来的隐患</h3><p>代码中关于对齐的隐患，很多是隐式的。比如在强制类型转换的时候。例如：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0x12345678</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> *p=<span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> *p1=<span class="literal">NULL</span>;</span><br><span class="line">p=&amp;i;</span><br><span class="line"></span><br><span class="line">*p=<span class="number">0x00</span>;</span><br><span class="line"></span><br><span class="line">p1=(<span class="keyword">unsigned</span> <span class="keyword">short</span> *)(p+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">*p1=<span class="number">0x0000</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后两句代码，从奇数边界去访问unsigned short型变量，显然不符合对齐的规定。</p>
+<p>在x86上，类似的操作只会影响效率，但是在MIPS或者sparc上，可能就是一个error,因为它们要求必须字节对齐.</p>
+<h3 id="如何查找与字节对齐方面的问题"><a href="#如何查找与字节对齐方面的问题" class="headerlink" title="如何查找与字节对齐方面的问题"></a>如何查找与字节对齐方面的问题</h3><p>如果出现对齐或者赋值问题首先查看</p>
+<ol>
+<li>编译器的big little端设置</li>
+<li>看这种体系本身是否支持非对齐访问</li>
+<li>如果支持看设置了对齐与否,如果没有则看访问时需要加某些特殊的修饰来标志其特殊访问操作</li>
+</ol>
+<p>举例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;  </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span>  </span><br><span class="line">        <span class="keyword">int</span> a;  </span><br><span class="line">        <span class="keyword">char</span> b;  </span><br><span class="line">        <span class="keyword">short</span> c;  </span><br><span class="line">    &#125;;  </span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span>  </span><br><span class="line">        <span class="keyword">char</span> b;  </span><br><span class="line">        <span class="keyword">int</span> a;  </span><br><span class="line">        <span class="keyword">short</span> c;  </span><br><span class="line">    &#125;;  </span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> pack (2) <span class="comment">/*指定按2字节对齐*/</span>  </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">C</span> &#123;</span>  </span><br><span class="line">        <span class="keyword">char</span> b;  </span><br><span class="line">        <span class="keyword">int</span> a;  </span><br><span class="line">        <span class="keyword">short</span> c;  </span><br><span class="line">    &#125;;  </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> pack () <span class="comment">/*取消指定对齐，恢复缺省对齐*/</span>  </span></span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> pack (1) <span class="comment">/*指定按1字节对齐*/</span>  </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">D</span> &#123;</span>  </span><br><span class="line">        <span class="keyword">char</span> b;  </span><br><span class="line">        <span class="keyword">int</span> a;  </span><br><span class="line">        <span class="keyword">short</span> c;  </span><br><span class="line">    &#125;;  </span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> pack ()<span class="comment">/*取消指定对齐，恢复缺省对齐*/</span>  </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> s1=<span class="keyword">sizeof</span>(struct A);  </span><br><span class="line">    <span class="keyword">int</span> s2=<span class="keyword">sizeof</span>(struct B);  </span><br><span class="line">    <span class="keyword">int</span> s3=<span class="keyword">sizeof</span>(struct C);  </span><br><span class="line">    <span class="keyword">int</span> s4=<span class="keyword">sizeof</span>(struct D);  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s3);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s4);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">12</span><br><span class="line">8</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<p>修改代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">   <span class="comment">// int a;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">   <span class="comment">// int a;</span></span><br><span class="line">    <span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>输出都是4，说明之前的int影响对齐！</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>List逆序的递归和迭代</title>
+    <url>/2019/10/01/List%E9%80%86%E5%BA%8F%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3/</url>
+    <content><![CDATA[<p>List的逆序可以有递归和迭代两种方法, 这两种方法的C++实现如下.</p>
+<a id="more"></a>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    Node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *p = node;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; p-&gt;data &lt;&lt; <span class="string">","</span>;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *next = <span class="literal">nullptr</span>;</span><br><span class="line">    Node *prev = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (node != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        next = node-&gt;next;</span><br><span class="line">        node-&gt;next = prev;</span><br><span class="line"></span><br><span class="line">        prev = node;</span><br><span class="line">        node = next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNodeByRecursion</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="literal">nullptr</span> || node-&gt;next == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node *head = reverseNodeByRecursion(node-&gt;next);</span><br><span class="line">    node-&gt;next-&gt;next = node;</span><br><span class="line">    node-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node *head = <span class="keyword">new</span> Node;</span><br><span class="line">    head-&gt;data = <span class="number">0</span>;</span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    Node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        p-&gt;next = <span class="keyword">new</span> Node;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        p-&gt;data = i;</span><br><span class="line">        p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNode(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNodeByRecursion(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虚拟继承</title>
+    <url>/2019/10/01/%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF/</url>
+    <content><![CDATA[<ul>
+<li><p>概念：<br>C++使用虚拟继承（Virtual Inheritance），解决从不同途径继承来的同名的数据成员在内存中有不同的拷贝造成数据不一致问题，将共同基类设置为虚基类。这时从不同的路径继承过来的同名数据成员在内存中就只有一个拷贝，同一个函数名也只有一个映射。</p>
+</li>
+<li><p>解决问题：<br>解决了二义性问题，也节省了内存，避免了数据不一致的问题。</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><p>同义词：<br>虚基类（把一个动词当成一个名词而已）<br>当在多条继承路径上有一个公共的基类，在这些路径中的某几条汇合处，这个公共的基类就会产生多个实例(或多个副本)，若只想保存这个基类的一个实例，可以将这个公共基类说明为虚基类。</p>
+</li>
+<li><p>语法：</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 派生类:</span> <span class="keyword">virtual</span> 基类<span class="number">1</span>，<span class="keyword">virtual</span> 基类<span class="number">2</span>，...，<span class="keyword">virtual</span> 基类n</span><br><span class="line">&#123;</span><br><span class="line">...<span class="comment">//派生类成员声明</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行顺序</p>
+<ul>
+<li>首先执行虚基类的构造函数，多个虚基类的构造函数按照被继承的顺序构造；</li>
+<li>执行基类的构造函数，多个基类的构造函数按照被继承的顺序构造；</li>
+<li>执行成员对象的构造函数，多个成员对象的构造函数按照申明的顺序构造；</li>
+<li>执行派生类自己的构造函数；</li>
+<li>析构以与构造相反的顺序执行；</li>
+</ul>
+<p>从虚基类直接或间接派生的派生类中的构造函数的成员初始化列表中都要列出对虚基类构造函数的调用。但只有用于建立对象的最派生类的构造函数调用虚基类的构造函数，而该派生类的所有基类中列出的对虚基类的构造函数的调用在执行中被忽略，从而保证对虚基类子对象只初始化一次。</p>
+<p>在一个成员初始化列表中同时出现对虚基类和非虚基类构造函数的调用时，虚基类的构造函数先于非虚基类的构造函数执行。</p>
+</li>
+<li><p>因果：<br>多重继承-&gt;二义性-&gt;虚拟继承解决</p>
+</li>
+<li><p>通过输出的比较</p>
+<blockquote>
+<p>1.在多继承情况下，虚基类关键字的作用范围和继承方式关键字相同，只对紧跟其后的基类起作用。<br>2.声明了虚基类之后，虚基类在进一步派生过程中始终和派生类一起，维护同一个基类子对象的拷贝。<br>3.观察类构造函数的构造顺序，拷贝也只有一份。</p>
+</blockquote>
+</li>
+<li><p>与虚函数关系<br>虚拟继承与虚函数有一定相似的地方，但他们之间是绝对没有任何联系的。</p>
+</li>
+</ul>
+<blockquote>
+<p>再想一次：虚拟继承，虚基类，虚函数。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>不能被继承的类</title>
+    <url>/2019/09/01/%E4%B8%8D%E8%83%BD%E8%A2%AB%E7%BB%A7%E6%89%BF%E7%9A%84%E7%B1%BB/</url>
+    <content><![CDATA[<p>虚继承模板类NoCopyable的类不可再被继承。</p>
+<a id="more"></a>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoCopyable</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> T;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    NoCopyable() &#123;&#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~NoCopyable() <span class="keyword">throw</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    NoCopyable(<span class="keyword">const</span> NoCopyable &amp;);</span><br><span class="line">    <span class="keyword">const</span> NoCopyable &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> NoCopyable &amp;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> :</span> <span class="keyword">virtual</span> <span class="keyword">public</span> NoCopyable&lt;Base&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Base()  &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __TIME__ &lt;&lt; <span class="string">","</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Base() <span class="keyword">throw</span> ()    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __TIME__ &lt;&lt; <span class="string">","</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Base(<span class="keyword">const</span> Base &amp;);</span><br><span class="line">    <span class="keyword">const</span> Base &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Base &amp;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Derived()    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __TIME__ &lt;&lt; <span class="string">","</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Derived() <span class="keyword">throw</span>()    &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __TIME__ &lt;&lt; <span class="string">","</span> &lt;&lt; __FUNCTION__ &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Derived d;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类NoCopyable的构造函数和析构函数因为是私有的，只有NoCopyable类的友元可以访问，Base类在继承时将模板的参数设置为了Base类，所以构造Base类对象时们可以直接访问父类（Base）的构造函数。</p>
+<p>而创建Derived对象时，Derived类的构造函数就要负责虚基类（NoCopyable）的构造，但是NoCopyable的构造函数是私有的，Derived没有访问的权限（友元关系不能被继承的），所以Derived类在编译时就会报错。这样Base类就不能被继承了.</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux踢出用户</title>
+    <url>/2018/05/19/Linux%E8%B8%A2%E5%87%BA%E7%94%A8%E6%88%B7/</url>
+    <content><![CDATA[<h2 id="查看当前登录用户"><a href="#查看当前登录用户" class="headerlink" title="查看当前登录用户"></a>查看当前登录用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis w  </span></span><br><span class="line">w                    (1)  - Show who is logged on and what they are doing  </span><br><span class="line"><span class="meta">$</span><span class="bash"> w  </span></span><br><span class="line">09:49:30 up 1 day, 17:19,  4 users,  load average: 0.00, 0.00, 0.00  </span><br><span class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT  </span><br><span class="line">root     tty3     -                09:25   23:25   0.10s  0.08s -bash  </span><br><span class="line">root     pts/0    192.168.105.188  09:32    9:38   0.02s  0.02s -bash  </span><br><span class="line">root     pts/1    192.168.105.188  09:36    9:32   0.03s  0.02s -bash  </span><br><span class="line">wilsh    pts/2    192.168.105.188  09:41    0.00s  0.00s  0.00s w</span><br></pre></td></tr></table></figure>
+
+<h2 id="pkill-踢出用户"><a href="#pkill-踢出用户" class="headerlink" title="pkill 踢出用户"></a>pkill 踢出用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis pkill  </span></span><br><span class="line">pkill [pgrep]        (1)  - look up or signal processes based on name and other attributes</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pkill -kill -t pts/2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pkill -9 -u wilsh</span><br></pre></td></tr></table></figure>
+
+<h2 id="fuser-踢出用户"><a href="#fuser-踢出用户" class="headerlink" title="fuser 踢出用户"></a>fuser 踢出用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis fuser</span></span><br><span class="line">fuser (1)            - identify processes using files or sockets</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fuser -k /dev/pts/2</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 32 or 64</title>
+    <url>/2018/05/13/Linux-32-or-64/</url>
+    <content><![CDATA[<p>查看linux是32位还是64位方法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt;  ~ getconf LONG_BIT</span><br><span class="line">64</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ file $(<span class="built_in">where</span> file)</span><br><span class="line">/usr/bin/file: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, <span class="keyword">for</span> GNU/Linux 2.6.32, BuildID[sha1]=a25ff8d819e9d276b6c282d51a572ad74078da3d, stripped</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux ubuntu-xenial 4.4.0-112-generic <span class="comment">#135-Ubuntu SMP Fri Jan 19 11:48:14 UTC 2018 i686 i686 i686 GNU/Linux</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ixxx的是32位的</li>
+<li>x86_64的是64位</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VS2017编译putty</title>
+    <url>/2018/05/13/VS2017%E7%BC%96%E8%AF%91putty/</url>
+    <content><![CDATA[<h2 id="下载putty"><a href="#下载putty" class="headerlink" title="下载putty"></a>下载putty</h2><p>从<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="noopener">putty</a>中选择”Unix source archive”下载</p>
+<h2 id="加载工程"><a href="#加载工程" class="headerlink" title="加载工程"></a>加载工程</h2><p>源码下载后, 解压, 双击”windows\MSVC\putty\putty.dsp”, VS2017加载工程</p>
+<h2 id="修改工程属性"><a href="#修改工程属性" class="headerlink" title="修改工程属性"></a>修改工程属性</h2><p>按如下设置VS2017工程属性.<br>此设置是为了解决问题: 错误 D8016 “/ZI”和“/Gy-”命令行选项不兼容</p>
+<ul>
+<li>“项目”—&gt;“属性”—&gt;“C/C++”—&gt;“常规”—&gt;“调试信息格式”—&gt;选择“程序数据库(/Zi)”或“无”</li>
+<li>“项目”—&gt;“属性”—&gt;“C/C++”—&gt;“代码生成”—&gt;“启用函数集链接”—&gt;选择“是 (/Gy)”</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="修改代码"><a href="#修改代码" class="headerlink" title="修改代码"></a>修改代码</h2><h3 id="修改windows-version-rc2"><a href="#修改windows-version-rc2" class="headerlink" title="修改windows\version.rc2"></a>修改windows\version.rc2</h3><p>修改前后分别如下, 解决version.rc2 cannot open include file ‘version.h’ 的问题</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"version.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"licence.h"</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../../../version.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../../../licence.h"</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改noshare-c"><a href="#修改noshare-c" class="headerlink" title="修改noshare.c"></a>修改noshare.c</h3><p>修改前后分别如下, 即注释platform_ssh_share和platform_ssh_share_cleanup的实现.<br>解决问题:</p>
+<blockquote>
+<p>winshare.obj : error LNK2005: _platform_ssh_share 已经在 noshare.obj 中定义<br>winshare.obj : error LNK2005: _platform_ssh_share_cleanup 已经在 noshare.obj 中定义</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">platform_ssh_share</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, Conf *conf,</span></span></span><br><span class="line"><span class="function"><span class="params">                       Plug downplug, Plug upplug, Socket *sock,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">char</span> **logtext, <span class="keyword">char</span> **ds_err, <span class="keyword">char</span> **us_err,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">int</span> can_upstream, <span class="keyword">int</span> can_downstream)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SHARE_NONE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">platform_ssh_share_cleanup</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int platform_ssh_share(const char *name, Conf *conf,</span></span><br><span class="line"><span class="comment">                       Plug downplug, Plug upplug, Socket *sock,</span></span><br><span class="line"><span class="comment">                       char **logtext, char **ds_err, char **us_err,</span></span><br><span class="line"><span class="comment">                       int can_upstream, int can_downstream)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    return SHARE_NONE;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">void platform_ssh_share_cleanup(const char *name)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="编译工程"><a href="#编译工程" class="headerlink" title="编译工程"></a>编译工程</h2><p>右键工程生成解决方案.</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo搭建个人博客</title>
+    <url>/2018/05/13/Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>1) 安装Git. 将本地的网页和文章等内容发布或提交到GitHub上需要用到Git.<br>2) 安装Node.js. Hexo是基于Node.js的高效静态站点生成框架.<br>3) 安装Hexo. 在Node.js安装完成后, 通过控制台执行以下命令即可.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h2 id="创建博客"><a href="#创建博客" class="headerlink" title="创建博客"></a>创建博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init leiz2192.hexo</span><br><span class="line"><span class="built_in">cd</span> leiz2192.hexo</span><br><span class="line">hexo new <span class="string">"YourBlogTitle"</span> //会生成<span class="built_in">source</span>/_posts/YourBlogTitle.md</span><br></pre></td></tr></table></figure>
+
+<p>然后撰写YourBlogTitle.md.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g   //生成网页</span><br><span class="line">hexo s   //s是server的缩写，启动服务, 通过http://localhost:4000/本地访问</span><br></pre></td></tr></table></figure>
+
+<h2 id="发布博客"><a href="#发布博客" class="headerlink" title="发布博客"></a>发布博客</h2><h3 id="安装部署插件"><a href="#安装部署插件" class="headerlink" title="安装部署插件"></a>安装部署插件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建部署仓库"><a href="#创建部署仓库" class="headerlink" title="创建部署仓库"></a>创建部署仓库</h3><p>在GitHub上”Create a new repository”, Repository name为<strong><em>your-github-user-name</em></strong>.github.io, 比如<strong><em>leiz2192</em></strong>.github.io</p>
+<h3 id="配置部署参数"><a href="#配置部署参数" class="headerlink" title="配置部署参数"></a>配置部署参数</h3><p>在_config.yml中配置deploy.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:leiz2192/leiz2192.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>repo建议使用ssh方式地址, https方式在部署时会需要输入用户名和密码.</p>
+<h3 id="生成发布博客"><a href="#生成发布博客" class="headerlink" title="生成发布博客"></a>生成发布博客</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo d -g  //生成网页并发布到GitHub</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以访问<a href="https://leiz2192.github.io/" target="_blank" rel="noopener">博客</a>.</p>
+<h2 id="维护博客"><a href="#维护博客" class="headerlink" title="维护博客"></a>维护博客</h2><p>博客的网页在repo <em>leiz2192.github.io</em>中维护, 而博客的md文件可以在repo <em>leiz2192.hexo</em>中维护. 这样数据和网页分离, 便于管理.</p>
+<p>而在电脑或系统改变了, git clone <em>leiz2192.hexo</em>后就可以继续维护博客, 而且历史文章不丢失.</p>
+<p>另外, 利用git hook可以在每次git push时自动发布博客, 只需在.git/hooks目录中新增pre-push文件, 文件内容如下.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">hexo d -g</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="修饰博客"><a href="#修饰博客" class="headerlink" title="修饰博客"></a>修饰博客</h2><h3 id="about"><a href="#about" class="headerlink" title="about"></a>about</h3><p>新建about page</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">"about"</span></span><br></pre></td></tr></table></figure>
+
+<p>修改theme的<code>_config.yml</code>, 去注释<code>menu</code>中的<code>about</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">......</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>source/about/index.md</code>文件即可.</p>
+<h3 id="tags"><a href="#tags" class="headerlink" title="tags"></a>tags</h3><p>新建tags page</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">"tags"</span></span><br></pre></td></tr></table></figure>
+
+<p>修改theme的<code>_config.yml</code>, 去注释<code>menu</code>中的<code>tags</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">......</span></span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>source/tags/index.md</code>文件, 增加<code>type: &quot;tags&quot;</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="bullet">-10</span><span class="bullet">-04</span> <span class="number">23</span><span class="string">:11:52</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"tags"</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="categories"><a href="#categories" class="headerlink" title="categories"></a>categories</h3><p>新建categories page</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">"categories"</span></span><br></pre></td></tr></table></figure>
+
+<p>修改theme的<code>_config.yml</code>, 去注释<code>menu</code>中的<code>categories</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">......</span></span><br><span class="line"><span class="attr">  categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>source/categories/index.md</code>文件, 增加<code>type: &quot;categories&quot;</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="bullet">-10</span><span class="bullet">-04</span> <span class="number">23</span><span class="string">:15:38</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"categories"</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><p>安装插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+
+<p>修改站点的配置文件<code>_config.yml</code>, 增加以下内容.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">search.xml</span></span><br><span class="line"><span class="attr">  field:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">  format:</span> <span class="string">html</span></span><br><span class="line"><span class="attr">  limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+
+<p>修改theme的<code>_config.yml</code>, 修改<code>local_search</code>的<code>enable</code>为<strong>true</strong>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>清理缓存后发布.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++命令行参数解析</title>
+    <url>/2018/04/14/C++%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>在Linux环境可以使用getopt解析命令行参数.</p>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>main()函数声明:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>从命令行传递给程序main()函数的包含两个部分的内容, argc 参数包含参数的计数值，而 argv 包含指向这些参数的指针数组.</p>
+<a id="more"></a>
+
+<h3 id="getopt"><a href="#getopt" class="headerlink" title="getopt"></a>getopt</h3><p>函数getopt位于unistd.h系统头文件中. Windows 没有这个头文件, 所有建议在Linux中使用.</p>
+<p>getopt原型</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getopt</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> *<span class="keyword">const</span> argv[], <span class="keyword">const</span> <span class="keyword">char</span> *optstring )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>给定了命令参数的数量 (argc)、指向这些参数的数组 (argv) 和选项字符串 (optstring) 后，getopt() 将返回第一个选项，并设置一些全局变量。使用相同的参数再次调用该函数时，它将返回下一个选项，并设置相应的全局变量。如果不再有识别到的选项，将返回 -1，此任务就完成了。</p>
+<p>getopt() 所设置的全局变量包括：</p>
+<ul>
+<li>optarg – 指向当前选项参数（如果有）的指针。</li>
+<li>optind – 再次调用 getopt() 时的下一个 argv 指针的索引。</li>
+<li>optopt – 最后一个已知选项。</li>
+</ul>
+<p>对于每个选项，选项字符串 (optstring) 中都包含一个对应的字符。具有参数的选项（如示例中的 -l 和 -o 选项）后面跟有一个 : 字符。示例所使用的 optstring 为 Il:o:vh?（前面提到，还要支持最后两个用于打印程序的使用方法消息的选项）。</p>
+<p>可以重复调用 getopt()，直到其返回 -1 为止；任何剩下的命令行参数通常视为文件名或程序相应的其他内容。</p>
+<h3 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span> file_name;</span><br><span class="line">  <span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">bool</span> s_internal = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">bool</span> c_internal = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">while</span> ((c = getopt(argc, argv, <span class="string">"scf:h"</span>)) != <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (c) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'c'</span>:</span><br><span class="line">        c_internal = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'s'</span>:</span><br><span class="line">        s_internal = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'f'</span>:</span><br><span class="line">        file_name = optarg;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'h'</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">':'</span>:   <span class="comment">/* missing option argument */</span></span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s: option `-%c' requires an argument\n"</span>, argv[<span class="number">0</span>], optopt);</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">"requires an argument"</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'?'</span>:</span><br><span class="line">      <span class="keyword">default</span>:    <span class="comment">/* invalid option */</span></span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"%s: option `-%c' is invalid: ignored\n"</span>, argv[<span class="number">0</span>], optopt);</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">"option invalid"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>在Windows可以使用的Boost.Program_options库解析命令行参数.</p>
+<h3 id="示例2"><a href="#示例2" class="headerlink" title="示例2"></a>示例2</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/program_options.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">namespace</span> po = boost::program_options;</span><br><span class="line">        po::<span class="function">options_description <span class="title">desc</span><span class="params">(<span class="string">"Allowed options"</span>)</span></span>;</span><br><span class="line">        desc.add_options()</span><br><span class="line">            (<span class="string">"xml_to_xls,x"</span>, po::value&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(), <span class="string">"from_xml_to_xls"</span>)</span><br><span class="line">            (<span class="string">"xls_to_xml,s"</span>, po::value&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(), <span class="string">"from_xls_to_xml"</span>)</span><br><span class="line">            (<span class="string">"out,o"</span>, po::value&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(), <span class="string">"assign output file name"</span>);</span><br><span class="line"></span><br><span class="line">        po::variables_map vm;</span><br><span class="line">        po::store(parse_command_line(argc, argv, desc), vm);</span><br><span class="line">        po::notify(vm);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> out_file;</span><br><span class="line">        <span class="keyword">if</span> (vm.count(<span class="string">"out"</span>)) &#123;</span><br><span class="line">            out_file = vm[<span class="string">"out"</span>].as&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (vm.count(<span class="string">"xml_to_xls"</span>)) &#123;</span><br><span class="line">            from_xml_to_xls(vm[<span class="string">"xml_to_xls"</span>].as&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(), out_file);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (vm.count(<span class="string">"xls_to_xml"</span>)) &#123;</span><br><span class="line">            from_xls_to_xml(vm[<span class="string">"xls_to_xml"</span>].as&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(), out_file);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; desc;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ModalDefToolException&amp; e) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; e.what()&lt;&lt;  <span class="string">"\n"</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (<span class="built_in">std</span>::logic_error&amp; e) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; e.what()&lt;&lt;  <span class="string">"\n"</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (...) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Unkown exception\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p>program_options的使用主要通过下面三个组件完成：</p>
+<table>
+<thead>
+<tr>
+<th>组件名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>options_description(选项描述器)</td>
+<td>描述当前的程序定义了哪些选项</td>
+</tr>
+<tr>
+<td>parse_command_line(选项分析器)</td>
+<td>解析由命令行输入的参数</td>
+</tr>
+<tr>
+<td>variables_map(选项存储器)</td>
+<td>容器,用于存储解析后的选项</td>
+</tr>
+</tbody></table>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ul>
+<li>构造option_description对象和variables_map对象</li>
+<li>add_options(): 向option_description对象添加选项</li>
+<li>parse_command_line(): 将命令行输入的参数解析出来</li>
+<li>store(): 将解析出的选项存储至variables_map中</li>
+<li>notify(): 通知variables_map去更新所有的外部变量</li>
+<li>count(): 检测某个选项是否被输入</li>
+<li>operator[]: 取出选项的值</li>
+</ul>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>Boost已经提供了编译好的Visual Studio版本, 可以直接<a href="https://dl.bintray.com/boostorg/release/1.65.1/binaries/" target="_blank" rel="noopener">下载</a>使用.</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装deb和rpm文件</title>
+    <url>/2018/04/14/%E5%AE%89%E8%A3%85deb%E5%92%8Crpm%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>deb 是 ubuntu 、debian 的格式。</li>
+<li>rpm 是 redhat 、fedora 、suse 的格式。</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装deb文件"><a href="#安装deb文件" class="headerlink" title="安装deb文件"></a>安装deb文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;安装包所在目录&gt;</span><br><span class="line">dpkg -i &lt;安装包&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装rpm文件"><a href="#安装rpm文件" class="headerlink" title="安装rpm文件"></a>安装rpm文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;安装包所在目录&gt;</span><br><span class="line">rpm -ivh &lt;安装包&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vimrc配置</title>
+    <url>/2018/04/14/vimrc%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>以下是收集整理个人使用的.vimrc文件配置.</p>
+<a id="more"></a>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set nocompatible " 关闭 vi 兼容模式</span><br><span class="line">syntax on " 自动语法高亮</span><br><span class="line">colorscheme desert " 设定配色方案</span><br><span class="line">set number " 显示行号</span><br><span class="line">set cursorline " 突出显示当前行</span><br><span class="line">set ruler " 打开状态栏标尺</span><br><span class="line">set shiftwidth=4 " 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 4</span><br><span class="line">set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格</span><br><span class="line">set tabstop=4 " 设定 tab 长度为 4</span><br><span class="line">set nobackup " 覆盖文件时不备份</span><br><span class="line">set autochdir " 自动切换当前目录为当前文件所在的目录</span><br><span class="line">filetype plugin indent on " 开启插件</span><br><span class="line">set backupcopy=yes " 设置备份时的行为为覆盖</span><br><span class="line">set ignorecase smartcase " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感</span><br><span class="line">set nowrapscan " 禁止在搜索到文件两端时重新搜索</span><br><span class="line">set incsearch " 输入搜索内容时就显示搜索结果</span><br><span class="line">set hlsearch " 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells " 关闭错误信息响铃</span><br><span class="line">set novisualbell " 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= " 置空错误铃声的终端代码</span><br><span class="line">" set showmatch " 插入括号时，短暂地跳转到匹配的对应括号</span><br><span class="line">" set matchtime=2 " 短暂跳转到匹配括号的时间</span><br><span class="line">set magic " 设置魔术</span><br><span class="line">set hidden " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存</span><br><span class="line">set guioptions-=T " 隐藏工具栏</span><br><span class="line">set guioptions-=m " 隐藏菜单栏</span><br><span class="line">set smartindent " 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start " 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 " 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 " 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line"></span><br><span class="line">" 设置在状态行显示的信息</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ %c:%l/%L%)\</span><br><span class="line">set foldenable " 开始折叠</span><br><span class="line">set foldmethod=syntax " 设置语法折叠</span><br><span class="line">set foldcolumn=0 " 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 " 设置折叠层数为</span><br><span class="line"></span><br><span class="line">" 中文显示</span><br><span class="line">set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936</span><br><span class="line">set termencoding=utf-8</span><br><span class="line">set encoding=utf-8</span><br><span class="line"></span><br><span class="line">set paste</span><br><span class="line">set expandtab</span><br><span class="line"></span><br><span class="line">noremap &lt;Space&gt; *N</span><br><span class="line">noremap &lt;C-\&gt; :q!&lt;CR&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大小端</title>
+    <url>/2018/04/14/%E5%A4%A7%E5%B0%8F%E7%AB%AF/</url>
+    <content><![CDATA[<h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><ul>
+<li><code>Little-Endian</code>:<code>低位字节排放在内存的低地址端，高位字节排放在内存的高地址端</code>。(逻辑上的低低高高)</li>
+<li><code>Big-Endian</code>:<code>高位字节排放在内存的低地址端，低位字节排放在内存的高地址端</code>。(像数据流一样填充)</li>
+<li>网络字节序：<em>TCP/IP各层协议将字节序定义为<code>Big-Endian</code></em>，因此TCP/IP协议中使用的字节序通常称之为网络字节序。</li>
+</ul>
+<h2 id="2-常见的CPU架构的字节序"><a href="#2-常见的CPU架构的字节序" class="headerlink" title="2. 常见的CPU架构的字节序"></a>2. 常见的CPU架构的字节序</h2><ul>
+<li>Big Endian : PowerPC、IBM、Sun</li>
+<li>Little Endian : x86、DEC</li>
+<li>ARM : 大小端可选</li>
+</ul>
+<h2 id="3-判断方法"><a href="#3-判断方法" class="headerlink" title="3. 判断方法"></a>3. 判断方法</h2><p>大小端问题主要涉及的是<strong>非单字节非字符串外的其余数据</strong>的表示和传递，如short型、int型等。判断主机大小端的方法有很多，常见的是联合体判断法。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isBigEndian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="keyword">char</span> b;</span><br><span class="line">    &#125; num;</span><br><span class="line">    num.a = <span class="number">0x1234</span>;</span><br><span class="line">    <span class="keyword">return</span> (num.b == <span class="number">0x12</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-转换方法"><a href="#4-转换方法" class="headerlink" title="4. 转换方法"></a>4. 转换方法</h2><p>出于效率考虑，大小端的处理在客户端。在客户端socket过来时把服务器主机的大小端通知给客户端，这样服务器就不需要改动，直接传递数据就行，这时候可以在客户端代码中封装几个宏，在客户端在收到数据后，根据那些宏来判断是否转换以及得出转换后的数值。<br>大小端转换最有效也是最常见的方法就是移位法。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __SWP16(A)   (( ((uint16)(A) &amp; 0xff00) &gt;&gt; 8)    | \  </span></span><br><span class="line">(( (uint16)(A) &amp; <span class="number">0x00ff</span>) &lt;&lt; <span class="number">8</span>)) <span class="meta">#<span class="meta-keyword">define</span> __SWP32(A) ((( (uint32)(A) &amp; 0xff000000)&gt;&gt; 24) | \</span></span><br><span class="line">(( (uint32)(A) &amp; <span class="number">0x00ff0000</span>) &gt;&gt; <span class="number">8</span>)   | \  </span><br><span class="line">(( (uint32)(A) &amp; <span class="number">0x0000ff00</span>) &lt;&lt; <span class="number">8</span>)   | \  </span><br><span class="line">(( (uint32)(A) &amp; <span class="number">0x000000ff</span>) &lt;&lt; <span class="number">24</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-为什么主机的字节序不统一"><a href="#5-为什么主机的字节序不统一" class="headerlink" title="5. 为什么主机的字节序不统一"></a>5. 为什么主机的字节序不统一</h2><p>这是因为 各个CPU厂商出于不同的逻辑考量，换句话说 大端和小端有其各自的优势。<br>我们知道计算机正常的内存增长方式是从低到高(当然栈不是)，取数据方式是从基址根据偏移找到他们的位置，从他们的存储方式可以看出，大端存储因为第一个字节就是高位，从而很容易知道它是正数还是负数，对于一些数值判断会很迅速。<br>而小端存储 第一个字节是它的低位，符号位在最后一个字节，这样在做数值四则运算时从低位每次取出相应字节运算，最后直到高位，并且最终把符号位刷新，这样的运算方式会更高效，也更符合我们手算的方式。</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux查看进程和端口</title>
+    <url>/2018/04/14/Linux-%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%AB%AF%E5%8F%A3/</url>
+    <content><![CDATA[<h2 id="查看进程占用的端口号"><a href="#查看进程占用的端口号" class="headerlink" title="查看进程占用的端口号"></a>查看进程占用的端口号</h2><p>命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -atunp | more</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1363/cupsd</span><br><span class="line">tcp        0      0 192.168.189.128:58887   91.189.88.45:80         ESTABLISHED 2121/http</span><br><span class="line">tcp6       0      0 ::1:631                 :::*                    LISTEN      1363/cupsd</span><br><span class="line">udp        0      0 0.0.0.0:68              0.0.0.0:*                           803/dhclient</span><br></pre></td></tr></table></figure>
+
+<h2 id="根据端口号查进程"><a href="#根据端口号查进程" class="headerlink" title="根据端口号查进程"></a>根据端口号查进程</h2><p>命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsof -i:631</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">cupsd   1363 root    5u  IPv6   6338      0t0  TCP localhost:ipp (LISTEN)</span><br><span class="line">cupsd   1363 root    6u  IPv4   6339      0t0  TCP localhost:ipp (LISTEN)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+</search>
