@@ -188,6 +188,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/19/Linux%E8%B8%A2%E5%87%BA%E7%94%A8%E6%88%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Leiz">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LazyStones">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/19/Linux%E8%B8%A2%E5%87%BA%E7%94%A8%E6%88%B7/" class="post-title-link" itemprop="url">Linux踢出用户</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-19 22:56:57" itemprop="dateCreated datePublished" datetime="2018-05-19T22:56:57+08:00">2018-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-07 01:30:28" itemprop="dateModified" datetime="2020-06-07T01:30:28+08:00">2020-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="查看当前登录用户"><a href="#查看当前登录用户" class="headerlink" title="查看当前登录用户"></a>查看当前登录用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis w  </span></span><br><span class="line">w                    (1)  - Show who is logged on and what they are doing  </span><br><span class="line"><span class="meta">$</span><span class="bash"> w  </span></span><br><span class="line">09:49:30 up 1 day, 17:19,  4 users,  load average: 0.00, 0.00, 0.00  </span><br><span class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT  </span><br><span class="line">root     tty3     -                09:25   23:25   0.10s  0.08s -bash  </span><br><span class="line">root     pts/0    192.168.105.188  09:32    9:38   0.02s  0.02s -bash  </span><br><span class="line">root     pts/1    192.168.105.188  09:36    9:32   0.03s  0.02s -bash  </span><br><span class="line">wilsh    pts/2    192.168.105.188  09:41    0.00s  0.00s  0.00s w</span><br></pre></td></tr></table></figure>
+
+<h2 id="pkill-踢出用户"><a href="#pkill-踢出用户" class="headerlink" title="pkill 踢出用户"></a>pkill 踢出用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis pkill  </span></span><br><span class="line">pkill [pgrep]        (1)  - look up or signal processes based on name and other attributes</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkill -kill -t pts/2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkill -9 -u wilsh</span><br></pre></td></tr></table></figure>
+
+<h2 id="fuser-踢出用户"><a href="#fuser-踢出用户" class="headerlink" title="fuser 踢出用户"></a>fuser 踢出用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> whatis fuser</span></span><br><span class="line">fuser (1)            - identify processes using files or sockets</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fuser -k /dev/pts/2</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/Linux-32-or-64/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -926,7 +1010,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

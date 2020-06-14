@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>VS2019 CMake编译gtest</title>
+    <url>/2020/06/14/VS2019-CMake%E8%87%AA%E7%BC%96%E8%AF%91gtest/</url>
+    <content><![CDATA[<ul>
+<li><p>从<a href="https://github.com/google/googletest" target="_blank" rel="noopener">GitHub</a>下载gtest源码。</p>
+</li>
+<li><p>从VS2019选择和创建CMake项目。</p>
+<a id="more"></a>
+<p><img src="/images/20200614T215958.440.png" alt="select"><br><img src="/images/20200614T220154.311.png" alt="create"></p>
+</li>
+<li><p>将下载的gtest源码解压到项目目录下。<br><img src="/images/20200614T222711.295.png" alt="srczip"></p>
+</li>
+<li><p>修改项目的CMakeLists.txt文件如下。</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required (VERSION <span class="number">3.8</span>)</span><br><span class="line"></span><br><span class="line">project (<span class="string">"HelloCMakeGtest"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(GTEST googletest<span class="number">-1.10</span>.x)</span><br><span class="line"></span><br><span class="line">add_subdirectory($&#123;GTEST&#125;)</span><br><span class="line">include_directories($&#123;GTEST&#125;/googletest/include/)</span><br><span class="line"></span><br><span class="line">add_executable (HelloCMakeGtest <span class="string">"HelloCMakeGtest.cpp"</span> <span class="string">"HelloCMakeGtest.h"</span>)</span><br><span class="line"></span><br><span class="line">target_link_libraries(LintCodeCMakeProject gtest)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目的CMake设置中将“gtest_force_shared_crt”设置为True。注意需要“显示高级设置”和“显示高级变量”。不然编译会存在问题。原因是gtest默认是静态编译，与VS项目设置不一致。<br><img src="/images/20200614T224131.819.png" alt="shared"></p>
+</li>
+<li><p>修改项目代码文件。</p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HelloCMakeGtest.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gtest/gtest.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> n1, <span class="keyword">int</span> n2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n1 + n2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(TestCase, test1) &#123;</span><br><span class="line">    ASSERT_EQ(<span class="number">12</span>, add(<span class="number">4</span>, <span class="number">8</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(TestCase, test2) &#123;</span><br><span class="line">    EXPECT_EQ(<span class="number">5</span>, add(<span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(TestCase, test3) &#123;</span><br><span class="line">    EXPECT_EQ(<span class="number">3</span>, add(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    ::testing::InitGoogleTest(&amp;argc, argv);</span><br><span class="line">    <span class="keyword">return</span> RUN_ALL_TESTS();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全部生成并开始执行。后续添加需要测试用例和修改CMakeLists.txt即可。<br><img src="/images/20200614T225131.721.png" alt="makerun"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows Terminal集成第三方Bash</title>
     <url>/2020/06/07/Windows-Terminal/</url>
     <content><![CDATA[<p>将Git Bash和Cygwin集成到Windows Terminal中。</p>
