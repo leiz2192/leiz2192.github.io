@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="当运算符的操作数具有不同的数据类型时, C++会自动将它们按照一定的规则转换为相同的数据类型. 理解这些规则将有助于程序员防止一些细微的错误蔓延到自己的程序中. 基本数据类型隐式转换简言之, 基本数据类型的隐式转换遵循的规则是基本数据类型的等级.">
+  <meta name="description" content="平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。  INFO输出单行日志信息，可以输出当前的时间（格式：%Y-%m-%d %H:%M:%S）、进程号和线程号。 FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++类型转换">
-<meta property="og:url" content="http://yoursite.com/2019/12/01/C-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:title" content="C++简单log">
+<meta property="og:url" content="http://yoursite.com/2020/10/11/C-%E7%AE%80%E5%8D%95log/index.html">
 <meta property="og:site_name" content="LazyStones">
-<meta property="og:description" content="当运算符的操作数具有不同的数据类型时, C++会自动将它们按照一定的规则转换为相同的数据类型. 理解这些规则将有助于程序员防止一些细微的错误蔓延到自己的程序中. 基本数据类型隐式转换简言之, 基本数据类型的隐式转换遵循的规则是基本数据类型的等级.">
+<meta property="og:description" content="平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。  INFO输出单行日志信息，可以输出当前的时间（格式：%Y-%m-%d %H:%M:%S）、进程号和线程号。 FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-12-01T09:58:25.000Z">
-<meta property="article:modified_time" content="2020-06-06T17:30:28.022Z">
+<meta property="article:published_time" content="2020-10-11T07:37:42.000Z">
+<meta property="article:modified_time" content="2020-10-11T08:22:00.382Z">
 <meta property="article:author" content="Leiz">
-<meta property="article:tag" content="类型转换">
+<meta property="article:tag" content="loging">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/12/01/C-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+<link rel="canonical" href="http://yoursite.com/2020/10/11/C-%E7%AE%80%E5%8D%95log/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>C++类型转换 | LazyStones</title>
+  <title>C++简单log | LazyStones</title>
   
 
 
@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/C-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/11/C-%E7%AE%80%E5%8D%95log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          C++类型转换
+          C++简单log
         </h1>
 
         <div class="post-meta">
@@ -216,16 +216,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-12-01 17:58:25" itemprop="dateCreated datePublished" datetime="2019-12-01T17:58:25+08:00">2019-12-01</time>
+              <time title="创建时间：2020-10-11 15:37:42 / 修改时间：16:22:00" itemprop="dateCreated datePublished" datetime="2020-10-11T15:37:42+08:00">2020-10-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 01:30:28" itemprop="dateModified" datetime="2020-06-07T01:30:28+08:00">2020-06-07</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -254,105 +248,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>当运算符的操作数具有不同的数据类型时, C++会自动将它们按照一定的规则转换为相同的数据类型. 理解这些规则将有助于程序员防止一些细微的错误蔓延到自己的程序中.</p>
-<h2 id="基本数据类型隐式转换"><a href="#基本数据类型隐式转换" class="headerlink" title="基本数据类型隐式转换"></a>基本数据类型隐式转换</h2><p>简言之, 基本数据类型的隐式转换遵循的规则是基本数据类型的等级.</p>
-<a id="more"></a>
-
-<p>从高到低的基本数据类型的等级排序如下:</p>
-<table>
-<thead>
-<tr>
-<th align="left">基本数据类型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">long double</td>
-</tr>
-<tr>
-<td align="left">double</td>
-</tr>
-<tr>
-<td align="left">float</td>
-</tr>
-<tr>
-<td align="left">unsigned long long int</td>
-</tr>
-<tr>
-<td align="left">long long int</td>
-</tr>
-<tr>
-<td align="left">unsigned long int</td>
-</tr>
-<tr>
-<td align="left">long int</td>
-</tr>
-<tr>
-<td align="left">unsigned int</td>
-</tr>
-<tr>
-<td align="left">int</td>
-</tr>
-</tbody></table>
-<p>从上表可以看出, 数据类型越宽等级越高. 所以上述等级排序存在一个例外: 当 int 和 long int 的大小相同时, 在这种情况下, unsigned int 将超越 long int, 因为它可以保存更高的值.</p>
-<p>具体规则:</p>
+        <p>平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。</p>
 <ul>
-<li>char, short 和 unsigned short 值自动升级为 int 值. 即无论何时在数学表达式中使用这些数据类型的值, 它们都将自动升级为 int 类型. 这也是为什么这几个类型不在上述等级排序中.</li>
-<li>当运算符使用不同数据类型的两个值时, 较低排名的值将被升级为较高排名值的类型.</li>
-<li>当表达式的最终值分配给变量时, 它将被转换为该变量的数据类型.</li>
-</ul>
-<p>需要注意的是, 隐式转换不仅有升级(一种数据类型被转换为更髙的数据类型), 也有降级(一种数据类型被转换为更低的数据类型). 比如:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> y = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// x被赋值为3，y仍然保留3.14</span></span><br><span class="line"><span class="keyword">int</span> x = y;</span><br></pre></td></tr></table></figure>
+<li>INFO输出单行日志信息，可以输出当前的时间（格式：%Y-%m-%d %H:%M:%S）、进程号和线程号。</li>
+<li>FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）<a id="more"></a>
 
-<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>数据类型的转换应该是尽量被避免的. 但如果避无可避, 应该使用显示类型转换, 也就是强制类型转换.</p>
-<p>强制类型转换有 C 风格和 C++ 风格.</p>
-<p>C 风格强制类型转换形如:</p>
-<blockquote>
-<p>(type)expression</p>
-</blockquote>
-<p>C 风格强制类型转换存在下面两个两个方面的不足, 是不推荐的使用的.</p>
-<ul>
-<li>可以在任意类型之间转换, 但不区分转换类型之间的差异. 比如将指向 const 对象的指针转换成指向非 const 对象的指针, 或者将指向基类对象的指针转换成指向派生类对象的指针.</li>
-<li>不易查找. 比如在存量代码中改变转换的类型, 无法快速找出已存在的类型转换.</li>
+</li>
 </ul>
-<p>而 C++ 风格的强制类型转换可以弥补 C 风格的不足.</p>
-<p>C++ 提供了下面四种类型转换.</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>static_cast</td>
-<td>转换数据类型, 类的上下行转换</td>
-</tr>
-<tr>
-<td>const_cast</td>
-<td>去除指针或引用的const属性</td>
-</tr>
-<tr>
-<td>dynamic_cast</td>
-<td>子类和父类之间的多态类型转换</td>
-</tr>
-<tr>
-<td>reinterpreter_cast</td>
-<td>重新解释类型转换</td>
-</tr>
-</tbody></table>
-<h3 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h3><ul>
-<li>转换数据类型, 由于没有运行时类型检查来保证转换的安全性, 不安全</li>
-<li>类的上下行转换, 由于没有运行时类型检查, 下行转换不安全</li>
-<li>static_cast不能转换掉原有类型的const, volatile, 或者 __unaligned 属性</li>
-</ul>
-<h3 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h3><ul>
-<li>转化常量指针为非常量的指针, 并且仍然指向原来的对象</li>
-<li>转化常量引用为非常量的引用, 并且仍然指向原来的对象</li>
-<li>const_cast 一般用于修改指针, 如 const int *ptr 形式</li>
-</ul>
-<h3 id="dynamic-cast"><a href="#dynamic-cast" class="headerlink" title="dynamic_cast"></a>dynamic_cast</h3><p>安全的上行转换(子类到基类的转换)和下行转换(基类到子类的转换).</p>
-<p>dynami_cast 在程序运行时对类型转换的”运行期类型信息”(Runtime type information, RTTI)进行了检查，是使用安全的: 转换成功则返回的是指向类的指针或引用，转换失败则返回NULL.</p>
-<h3 id="reinterpreter-cast"><a href="#reinterpreter-cast" class="headerlink" title="reinterpreter_cast"></a>reinterpreter_cast</h3><p>行无关类型的转换. 用在任意的指针间的转换, 任意引用间的转换, 指针和足够大的整型之间的转换, 整型到指针的转换.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INFO(msg) \</span></span><br><span class="line"><span class="keyword">do</span> &#123; \</span><br><span class="line">    <span class="keyword">auto</span> now = <span class="built_in">std</span>::chrono::system_clock::now(); \</span><br><span class="line">    <span class="keyword">auto</span> t = <span class="built_in">std</span>::chrono::system_clock::<span class="keyword">to_time_t</span>(now); \</span><br><span class="line">    <span class="keyword">auto</span> <span class="keyword">fmt_t</span> = <span class="built_in">std</span>::put_time(<span class="built_in">std</span>::localtime(&amp;t), <span class="string">"%Y-%m-%d %H:%M:%S"</span>); \</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">ostringstream</span> oss; \</span><br><span class="line">    oss &lt;&lt; <span class="keyword">fmt_t</span> &lt;&lt; <span class="string">" ["</span> &lt;&lt; getpid() &lt;&lt; <span class="string">"|"</span> &lt;&lt; gettid() &lt;&lt; <span class="string">"] "</span> &lt;&lt; msg &lt;&lt; <span class="string">"\n"</span>; \</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; oss.str(); \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> _<span class="title">UniInfo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    _UniInfo(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; msg) : msg_(msg) &#123;</span><br><span class="line">        start_ = <span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" Enter"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~_UniInfo() &#123;</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" Exit"</span>);</span><br><span class="line">        <span class="keyword">auto</span> end = <span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line">        <span class="keyword">auto</span> elapsed = <span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::microseconds&gt;(end - start_).count();</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" elapsed time: "</span> &lt;&lt; elapsed &lt;&lt; <span class="string">" microseconds"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> msg_;</span><br><span class="line">    <span class="built_in">std</span>::chrono::system_clock::time_point start_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FUNC(msg) \</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">ostringstream</span> _oss; \</span><br><span class="line">    _oss &lt;&lt; msg; \</span><br><span class="line">    _UniInfo _uniInfo(_oss.str());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FUNCTION() FUNC(__func__)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    FUNCTION();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -362,7 +265,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag"># 类型转换</a>
+              <a href="/tags/loging/" rel="tag"># loging</a>
           </div>
 
         
@@ -371,13 +274,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/09/C-11%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="prev" title="C++11智能指针">
-      <i class="fa fa-chevron-left"></i> C++11智能指针
+    <a href="/2020/06/14/VS2019-CMake%E8%87%AA%E7%BC%96%E8%AF%91gtest/" rel="prev" title="VS2019 CMake编译gtest">
+      <i class="fa fa-chevron-left"></i> VS2019 CMake编译gtest
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/01/01/const-in-C/" rel="next" title="const in C++">
-      const in C++ <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -436,7 +336,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型隐式转换"><span class="nav-number">1.</span> <span class="nav-text">基本数据类型隐式转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制类型转换"><span class="nav-number">2.</span> <span class="nav-text">强制类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-cast"><span class="nav-number">2.1.</span> <span class="nav-text">static_cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-cast"><span class="nav-number">2.2.</span> <span class="nav-text">const_cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamic-cast"><span class="nav-number">2.3.</span> <span class="nav-text">dynamic_cast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reinterpreter-cast"><span class="nav-number">2.4.</span> <span class="nav-text">reinterpreter_cast</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
