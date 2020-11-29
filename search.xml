@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>基于Python的简单FTP服务器</title>
+    <url>/2020/11/21/simple-ftp-server-by-python/</url>
+    <content><![CDATA[<p>代码见<a href="https://github.com/leiz2192/Python/tree/master/PyFtpServer" target="_blank" rel="noopener">GitHub</a>。</p>
+<p>UI使用基于tk的PySimpleGUI，FTP服务器使用pyftpdlib，使用pyinstaller进行打包。</p>
+<ul>
+<li><p>Win10运行参考界面<br><img src="/images/20201129T195324.321.png" alt="win界面"></p>
+</li>
+<li><p>Ubuntu20.04运行参考界面<br><img src="/images/20201129T203840.135.png" alt="ubunt界面"></p>
+</li>
+<li><p>打包命令</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PyInstaller -F -w py_ftp_server.py</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>C++简单log</title>
     <url>/2020/10/11/C-%E7%AE%80%E5%8D%95log/</url>
     <content><![CDATA[<p>平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。</p>
@@ -11,6 +27,10 @@
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INFO(msg) \</span></span><br><span class="line"><span class="keyword">do</span> &#123; \</span><br><span class="line">    <span class="keyword">auto</span> now = <span class="built_in">std</span>::chrono::system_clock::now(); \</span><br><span class="line">    <span class="keyword">auto</span> t = <span class="built_in">std</span>::chrono::system_clock::<span class="keyword">to_time_t</span>(now); \</span><br><span class="line">    <span class="keyword">auto</span> <span class="keyword">fmt_t</span> = <span class="built_in">std</span>::put_time(<span class="built_in">std</span>::localtime(&amp;t), <span class="string">"%Y-%m-%d %H:%M:%S"</span>); \</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">ostringstream</span> oss; \</span><br><span class="line">    oss &lt;&lt; <span class="keyword">fmt_t</span> &lt;&lt; <span class="string">" ["</span> &lt;&lt; getpid() &lt;&lt; <span class="string">"|"</span> &lt;&lt; gettid() &lt;&lt; <span class="string">"] "</span> &lt;&lt; msg &lt;&lt; <span class="string">"\n"</span>; \</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; oss.str(); \</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> _<span class="title">UniInfo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    _UniInfo(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; msg) : msg_(msg) &#123;</span><br><span class="line">        start_ = <span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" Enter"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~_UniInfo() &#123;</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" Exit"</span>);</span><br><span class="line">        <span class="keyword">auto</span> end = <span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line">        <span class="keyword">auto</span> elapsed = <span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::microseconds&gt;(end - start_).count();</span><br><span class="line">        INFO(msg_ &lt;&lt; <span class="string">" elapsed time: "</span> &lt;&lt; elapsed &lt;&lt; <span class="string">" microseconds"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> msg_;</span><br><span class="line">    <span class="built_in">std</span>::chrono::system_clock::time_point start_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FUNC(msg) \</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">ostringstream</span> _oss; \</span><br><span class="line">    _oss &lt;&lt; msg; \</span><br><span class="line">    _UniInfo _uniInfo(_oss.str());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FUNCTION() FUNC(__func__)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    FUNCTION();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>INFO中之所以先ostringstream再cout，是由于msg中有可能会存在函数调用，是函数调用先执行后再cout。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>c++</category>
