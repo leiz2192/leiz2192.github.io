@@ -4,19 +4,19 @@
     <title>C++函数重载和函数重写</title>
     <url>/2020/12/05/cplusplus-override-overload-redefine/</url>
     <content><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>对于C++中经常出现的函数名称相同但是参数列表或者返回值不同的函数，主要存在三种情况：</p>
-<h3 id="函数重写（override）"><a href="#函数重写（override）" class="headerlink" title="函数重写（override）"></a>函数重写（override）</h3><p>函数重载主要实现了父类与子类之间的多态性，子类中定义与父类中名称和参数以及返回值都相同的虚函数。</p>
+<h3 id="函数重写override"><a href="#函数重写override" class="headerlink" title="函数重写override"></a>函数重写override</h3><p>函数重载主要实现了父类与子类之间的多态性，子类中定义与父类中名称和参数以及返回值都相同的虚函数。</p>
 <ul>
 <li>重写的函数不能是static函数，必须是virtual函数,即函数在原始的基类中被声明为虚函数；</li>
 <li>重写函数与基类函数分在两个类的声明和定义中，这也就导致二者的作用域不同；</li>
 <li>重写函数的名称、参数列表以及返回值（即函数原型）都要与基类的函数相同；</li>
 <li>重写函数的访问修饰符可以不同，尽管virtual函数是private的，在派生类中重写的函数可以是public或protect的</li>
 </ul>
-<h3 id="函数重载（overload）"><a href="#函数重载（overload）" class="headerlink" title="函数重载（overload）"></a>函数重载（overload）</h3><p>指函数名称相同但是参数类型或者参数顺序不同的相同作用域中的函数，函数重载不能靠返回值来进行区分；</p>
-<h3 id="重定义-redefine"><a href="#重定义-redefine" class="headerlink" title="重定义(redefine)"></a>重定义(redefine)</h3><p>指子类重新定义父类中的非虚函数（参数列表可以不同），这样父类中的对应函数将被隐藏。</p>
+<h3 id="函数重载overload"><a href="#函数重载overload" class="headerlink" title="函数重载overload"></a>函数重载overload</h3><p>指函数名称相同但是参数类型或者参数顺序不同的相同作用域中的函数，函数重载不能靠返回值来进行区分；</p>
+<h3 id="重定义redefine"><a href="#重定义redefine" class="headerlink" title="重定义redefine"></a>重定义redefine</h3><p>指子类重新定义父类中的非虚函数（<code>参数列表可以不同</code>），这样父类中的对应函数将被隐藏。</p>
 <p>比如以下程序编译时提示<code>error: no matching function for call to ‘B::func(int)’</code></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"A: "</span> &lt;&lt; a &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"B: "</span> &lt;&lt; a &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    B b;</span><br><span class="line">    b.func(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="重写（override）与重载-overload-的区别"><a href="#重写（override）与重载-overload-的区别" class="headerlink" title="重写（override）与重载(overload)的区别"></a>重写（override）与重载(overload)的区别</h2><ul>
+<h2 id="重写override与重载overload的区别"><a href="#重写override与重载overload的区别" class="headerlink" title="重写override与重载overload的区别"></a>重写override与重载overload的区别</h2><ul>
 <li>函数重写是子类和父类之间的继承关系，是垂直关系；方法的重载是同一个类中方法之间的关系，是水平关系；</li>
 <li>重写需要子类和父类中的两个函数的函数原型完全相同；重载要求两个函数参数列表不同；</li>
 <li>在重写关系中，调用具体调用哪一个函数是根据（对象对应存储空间的实际类型）为准的，这涉及到动态绑定和静态绑定的问题，也就是虚函数的调用机制，而函数重载主要是靠形参列表的不同来区分具体调用哪个函数的。</li>
