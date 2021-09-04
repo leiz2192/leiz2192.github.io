@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python小工具之LazyTime</title>
+    <url>/2021/09/05/Python%E5%B0%8F%E5%B7%A5%E5%85%B7%E4%B9%8BLazyTime/</url>
+    <content><![CDATA[<p>代码见<a href="https://github.com/leiz2192/lazytime" target="_blank" rel="noopener">GitHub</a>。</p>
+<p>利用 <a href="https://pysimplegui.readthedocs.io/en/latest/" target="_blank" rel="noopener">PySimpleGUI</a> 和 <a href="https://gitee.com/kinegratii/borax" target="_blank" rel="noopener">Borax.Calendars</a>  写的一个小工具，用于显示日期、时间、星期和农历信息。</p>
+<p>Win10运行参考界面如下，可拖拽，双击鼠标关闭。<br><img src="/images/20210905T004807.858.png" alt="win10"></p>
+<p>时间信息获取方式：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> borax.calendars.lunardate <span class="keyword">import</span> LunarDate</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_lazy_time</span><span class="params">()</span>:</span></span><br><span class="line">    prefix = datetime.datetime.now().strftime(<span class="string">"%Y-%m-%d %H:%M:%S %A"</span>)</span><br><span class="line">    today = LunarDate.today()</span><br><span class="line">    suffix = <span class="string">"&#123;&#125;月&#123;&#125; &#123;&#125;&#123;&#125;年"</span>.format(today.cn_month, today.cn_day, today.gz_year, today.animal)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"&#123;&#125; &#123;&#125;"</span>.format(prefix, suffix)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>通过多线程更新界面时间信息，每秒更新一次，默认 Thread 没有被动停止方法，所以继承 Thread 自定义实现。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> PySimpleGUI <span class="keyword">as</span> sg</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpdateLazyTime</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, window)</span>:</span></span><br><span class="line">        super(UpdateLazyTime, self).__init__()</span><br><span class="line">        self._stop = <span class="literal">False</span></span><br><span class="line">        self._window = window</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> self._stop:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            self._window[<span class="string">"lazy_time"</span>].update(get_lazy_time())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stop</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._stop = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">sg.theme(<span class="string">'Reddit'</span>)</span><br><span class="line">layout = [[sg.Text(get_lazy_time(), font=(<span class="string">"Microsoft YaHei"</span>, <span class="number">10</span>), key=<span class="string">"lazy_time"</span>, enable_events=<span class="literal">True</span>)]]</span><br><span class="line">window = sg.Window(<span class="string">''</span>, layout, no_titlebar=<span class="literal">True</span>, grab_anywhere=<span class="literal">True</span>, keep_on_top=<span class="literal">True</span>, margins=(<span class="number">0</span>,<span class="number">0</span>), alpha_channel=<span class="number">0.75</span>)</span><br><span class="line">uthread = UpdateLazyTime(window)</span><br><span class="line">uthread.start()</span><br></pre></td></tr></table></figure>
+
+<p>双击关闭通过检查两次点击间隔时间小于 1s 实现，前提是 sg.Text 的 enable_events 设置为 True，否则无法接收到事件。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">last_time = <span class="literal">None</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    event, _ = window.read()</span><br><span class="line">    <span class="keyword">if</span> event != <span class="string">"lazy_time"</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> last_time <span class="keyword">and</span> (datetime.datetime.now() - last_time).seconds &lt; <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    last_time = datetime.datetime.now()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>PySimpleGUI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++函数重载和函数重写</title>
     <url>/2020/12/05/cplusplus-override-overload-redefine/</url>
     <content><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>对于C++中经常出现的函数名称相同但是参数列表或者返回值不同的函数，主要存在三种情况：</p>
@@ -13,6 +35,7 @@
 </ul>
 <h3 id="函数重载overload"><a href="#函数重载overload" class="headerlink" title="函数重载overload"></a>函数重载overload</h3><p>指函数名称相同但是参数类型或者参数顺序不同的相同作用域中的函数，函数重载不能靠返回值来进行区分；</p>
 <h3 id="重定义redefine"><a href="#重定义redefine" class="headerlink" title="重定义redefine"></a>重定义redefine</h3><p>指子类重新定义父类中的非虚函数（<code>参数列表可以不同</code>），这样父类中的对应函数将被隐藏。</p>
+<a id="more"></a>
 <p>比如以下程序编译时提示<code>error: no matching function for call to ‘B::func(int)’</code></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"A: "</span> &lt;&lt; a &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"B: "</span> &lt;&lt; a &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    B b;</span><br><span class="line">    b.func(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -44,6 +67,12 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>PySimpleGUI</tag>
+      </tags>
   </entry>
   <entry>
     <title>C++简单log</title>
