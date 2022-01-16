@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C++ Pimpl技术</title>
+    <url>/2022/01/16/C-Pimpl%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<h2 id="什么是Pimpl技术"><a href="#什么是Pimpl技术" class="headerlink" title="什么是Pimpl技术"></a>什么是Pimpl技术</h2><p>Pimpl，Pointer to Implementation，意为“具体实现的指针”，有着“编译防火墙(compilation firewall)”的名头。</p>
+<p>它通过一个私有的成员指针，将指针所指向的类的内部实现数据进行隐藏，降低耦合性和分离接口实现的一个现代 C++ 技术。</p>
+<a id="more"></a>
+<h2 id="Pimpl代码示例"><a href="#Pimpl代码示例" class="headerlink" title="Pimpl代码示例"></a>Pimpl代码示例</h2><p>View类定义：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    View();</span><br><span class="line">    ~View();</span><br><span class="line">    View(View&amp;&amp; v);</span><br><span class="line">    View&amp; <span class="keyword">operator</span>=(View&amp;&amp; v);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Impl</span>;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;Impl&gt; pimpl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>View类实现：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"view.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//View::Impl的定义，体现了View类的具体实现细节</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span>:</span>:Impl &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Impl();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">printName</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">View::Impl::Impl()&#123;</span><br><span class="line">    name = <span class="string">"ViewImpl"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> View::Impl::printName()&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"this is my name:"</span> &lt;&lt; name &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//View类接口的实现</span></span><br><span class="line">View::View():pimpl(<span class="built_in">std</span>::make_unique&lt;Impl&gt;())&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">View::~View() = <span class="keyword">default</span>;</span><br><span class="line">View::View(View&amp;&amp; v) = <span class="keyword">default</span>;</span><br><span class="line">View&amp; View::<span class="keyword">operator</span> = (View&amp;&amp; v) = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> View::display()&#123;</span><br><span class="line">    pimpl-&gt;printName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>View使用：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"view.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello C++ World\n"</span>;</span><br><span class="line"></span><br><span class="line">    View v = View();</span><br><span class="line">    v.display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ g++ main.cpp view.cpp</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./a.out</span><br><span class="line">Hello C++ World</span><br><span class="line">this is my name:ViewImpl</span><br></pre></td></tr></table></figure>
+
+<h2 id="Pimpl技术优缺点"><a href="#Pimpl技术优缺点" class="headerlink" title="Pimpl技术优缺点"></a>Pimpl技术优缺点</h2><p>优点：</p>
+<ul>
+<li>最大程度地减少编译依赖项：其一减少原类不必要的头文件的依赖，加速编译；其二对Impl类进行修改，无需重新编译原类；</li>
+<li>接口和实现分离，降低模块的耦合：私有成员隐藏在公有接口之外，给用户一个简洁明了的使用接口， 适合闭源API设计；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要占用额外的指针内存；</li>
+<li>访问时多一次间接指针操作的开销；</li>
+<li>在使用、阅读和调试上都可能有所不便；</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/KillerAery/p/9539705.html" target="_blank" rel="noopener">C++ 编译期封装-Pimpl技术</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/cpp/cpp/pimpl-for-compile-time-encapsulation-modern-cpp?view=msvc-170" target="_blank" rel="noopener">用于编译时封装的 Pimpl（现代 C++）</a></p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>pimpl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python小工具之PyTomatoTimer</title>
     <url>/2021/09/05/Python%E5%B0%8F%E5%B7%A5%E5%85%B7%E4%B9%8BPyTomatoTimer/</url>
     <content><![CDATA[<p>代码见<a href="https://github.com/leiz2192/PyTomato" target="_blank" rel="noopener">GitHub</a>。</p>
@@ -1068,6 +1110,21 @@
       </tags>
   </entry>
   <entry>
+    <title>List逆序的递归和迭代</title>
+    <url>/2019/10/01/List%E9%80%86%E5%BA%8F%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3/</url>
+    <content><![CDATA[<p>List的逆序可以有递归和迭代两种方法, 这两种方法的C++实现如下.</p>
+<a id="more"></a>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    Node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *p = node;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; p-&gt;data &lt;&lt; <span class="string">","</span>;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *next = <span class="literal">nullptr</span>;</span><br><span class="line">    Node *prev = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (node != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        next = node-&gt;next;</span><br><span class="line">        node-&gt;next = prev;</span><br><span class="line"></span><br><span class="line">        prev = node;</span><br><span class="line">        node = next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNodeByRecursion</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="literal">nullptr</span> || node-&gt;next == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node *head = reverseNodeByRecursion(node-&gt;next);</span><br><span class="line">    node-&gt;next-&gt;next = node;</span><br><span class="line">    node-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node *head = <span class="keyword">new</span> Node;</span><br><span class="line">    head-&gt;data = <span class="number">0</span>;</span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    Node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        p-&gt;next = <span class="keyword">new</span> Node;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        p-&gt;data = i;</span><br><span class="line">        p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNode(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNodeByRecursion(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>虚拟继承</title>
     <url>/2019/10/01/%E8%99%9A%E6%8B%9F%E7%BB%A7%E6%89%BF/</url>
     <content><![CDATA[<ul>
@@ -1108,21 +1165,6 @@
 <blockquote>
 <p>再想一次：虚拟继承，虚基类，虚函数。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>List逆序的递归和迭代</title>
-    <url>/2019/10/01/List%E9%80%86%E5%BA%8F%E7%9A%84%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3/</url>
-    <content><![CDATA[<p>List的逆序可以有递归和迭代两种方法, 这两种方法的C++实现如下.</p>
-<a id="more"></a>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    Node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *p = node;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; p-&gt;data &lt;&lt; <span class="string">","</span>;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNode</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    Node *next = <span class="literal">nullptr</span>;</span><br><span class="line">    Node *prev = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (node != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        next = node-&gt;next;</span><br><span class="line">        node-&gt;next = prev;</span><br><span class="line"></span><br><span class="line">        prev = node;</span><br><span class="line">        node = next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node * <span class="title">reverseNodeByRecursion</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="literal">nullptr</span> || node-&gt;next == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node *head = reverseNodeByRecursion(node-&gt;next);</span><br><span class="line">    node-&gt;next-&gt;next = node;</span><br><span class="line">    node-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node *head = <span class="keyword">new</span> Node;</span><br><span class="line">    head-&gt;data = <span class="number">0</span>;</span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    Node *p = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        p-&gt;next = <span class="keyword">new</span> Node;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        p-&gt;data = i;</span><br><span class="line">        p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNode(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    head = reverseNodeByRecursion(head);</span><br><span class="line">    printNode(head);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>c++</category>
