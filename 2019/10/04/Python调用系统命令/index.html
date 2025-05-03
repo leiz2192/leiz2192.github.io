@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="utf-8">
   <title>Python调用系统命令 | LazyStones</title>
@@ -24,7 +24,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/10/04/Python%E8%B0%83%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="LazyStones">
 <meta property="og:description" content="os.system该方法在调用完shell脚本后,返回一个16位的二进制数.低位为杀死所调用脚本的信号号码,高位为脚本的退出状态码.  脚本中”exit 1”的代码执行后, os.system函数返回值的高位数则是1;如果低位数是0的情况下, 则函数的返回值是0x100, 换算为10进制得到256.  如果我们需要获得os.system的正确返回值,那使用位移运算可以还原返回值: &gt;&gt;&gt; n &#x3D;">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale">
 <meta property="article:published_time" content="2019-10-04T09:55:55.000Z">
 <meta property="article:modified_time" content="2025-04-26T13:56:56.835Z">
 <meta property="article:author" content="Leiz">
@@ -69,6 +69,14 @@
       href="/archives/"
     >
       归档
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
     </a>
   
     <a
@@ -138,7 +146,7 @@
       
       
         <div class="sea-article-catalog">
-          <h2>Table of contents</h2>
+          <h2>目录</h2>
           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#os-system"><span class="toc-number">1.</span> <span class="toc-text">os.system</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#os-Popen"><span class="toc-number">2.</span> <span class="toc-text">os.Popen</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#subprocess-Popen"><span class="toc-number">3.</span> <span class="toc-text">subprocess.Popen</span></a></li></ol>
         </div>
       

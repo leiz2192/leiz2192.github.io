@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="utf-8">
   <title>C++多态 | LazyStones</title>
@@ -24,7 +24,7 @@
 <meta property="og:url" content="http://yoursite.com/2022/02/04/C-%E5%A4%9A%E6%80%81/index.html">
 <meta property="og:site_name" content="LazyStones">
 <meta property="og:description" content="什么是多态面向对象的三大特性：封装、继承、多态。  封装：隐藏对象的属性和实现细节，仅对外公开访问方法，并且控制访问级别在面向对象方法中。简言之，用类实现封装，用封装来实现高内聚，低耦合。 继承：从已有的类中派生出新的类，新的类能吸收已有类的属性和行为， 可以实现重用代码和扩展新的能力。 多态：指通过基类的指针或者引用， 在运行时动态调用实际绑定对象函数的行为。多态可以简单地概括为“一个接口，多种">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale">
 <meta property="og:image" content="http://yoursite.com/images/20220204T005410.067.png">
 <meta property="og:image" content="http://yoursite.com/images/20220204T005855.002.png">
 <meta property="og:image" content="http://yoursite.com/images/20220204T010218.310.png">
@@ -74,6 +74,14 @@
       href="/archives/"
     >
       归档
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
     </a>
   
     <a
@@ -143,7 +151,7 @@
       
       
         <div class="sea-article-catalog">
-          <h2>Table of contents</h2>
+          <h2>目录</h2>
           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%9A%E6%80%81"><span class="toc-number">1.</span> <span class="toc-text">什么是多态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">多态的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">多态的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%86%99-vs-%E9%87%8D%E8%BD%BD-vs-%E9%9A%90%E8%97%8F"><span class="toc-number">4.</span> <span class="toc-text">重写 vs 重载 vs 隐藏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
         </div>
       

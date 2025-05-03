@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="utf-8">
   <title>C++简单log | LazyStones</title>
@@ -24,7 +24,7 @@
 <meta property="og:url" content="http://yoursite.com/2020/10/11/C-%E7%AE%80%E5%8D%95log/index.html">
 <meta property="og:site_name" content="LazyStones">
 <meta property="og:description" content="平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。  INFO输出单行日志信息，可以输出当前的时间（格式：%Y-%m-%d %H:%M:%S）、进程号和线程号。 FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale">
 <meta property="article:published_time" content="2020-10-11T07:37:42.000Z">
 <meta property="article:modified_time" content="2025-04-26T13:56:56.835Z">
 <meta property="article:author" content="Leiz">
@@ -69,6 +69,14 @@
       href="/archives/"
     >
       归档
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
     </a>
   
     <a

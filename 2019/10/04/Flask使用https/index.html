@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="utf-8">
   <title>Flask使用https | LazyStones</title>
@@ -24,7 +24,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/10/04/Flask%E4%BD%BF%E7%94%A8https/index.html">
 <meta property="og:site_name" content="LazyStones">
 <meta property="og:description" content="概述Flask在run时可以通过参数ssl_context指定证书来使得运行的web app使用较为安全的协议https. 安装pyOpenSSLpyOpenSSL使Python的openssl库.通过pip安装: pip install pyOpenSSL">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale">
 <meta property="article:published_time" content="2019-10-04T15:39:14.000Z">
 <meta property="article:modified_time" content="2025-04-26T13:56:56.835Z">
 <meta property="article:author" content="Leiz">
@@ -69,6 +69,14 @@
       href="/archives/"
     >
       归档
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
     </a>
   
     <a
@@ -138,7 +146,7 @@
       
       
         <div class="sea-article-catalog">
-          <h2>Table of contents</h2>
+          <h2>目录</h2>
           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pyOpenSSL"><span class="toc-number">2.</span> <span class="toc-text">安装pyOpenSSL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E8%AF%81%E4%B9%A6"><span class="toc-number">3.</span> <span class="toc-text">默认证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%81%E4%B9%A6"><span class="toc-number">4.</span> <span class="toc-text">自定义证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-a-private-key"><span class="toc-number">4.1.</span> <span class="toc-text">Generate a private key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-a-CSR"><span class="toc-number">4.2.</span> <span class="toc-text">Generate a CSR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remove-Passphrase-from-key"><span class="toc-number">4.3.</span> <span class="toc-text">Remove Passphrase from key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-self-signed-certificate"><span class="toc-number">4.4.</span> <span class="toc-text">Generate self signed certificate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.5.</span> <span class="toc-text">使用</span></a></li></ol></li></ol>
         </div>
       
