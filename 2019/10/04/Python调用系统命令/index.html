@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -175,7 +175,7 @@
 </ul>
 <p>前者返回值是脚本的退出状态码, 后者的返回值是脚本执行过程中的输出内容. 实际使用时视需求情况而选择。<br>明显地,像调用”ls”这样的shell命令,应该使用popen的方法来获得内容</p>
 <blockquote>
-<p>popen(command [, mode=’r’ [, bufsize]]) -&gt; pipe</p>
+<p>popen(command [, mode&#x3D;’r’ [, bufsize]]) -&gt; pipe</p>
 </blockquote>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">tmp <span class="token operator">=</span> os<span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'ls *.py'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -185,7 +185,7 @@
 <p>但是Popen函数有一个缺陷，就是它是一个阻塞的方法。如果运行cmd时产生的内容非常多，函数非常容易阻塞住。解决办法是不使用wait()方法，但是也不能获得执行的返回值了。</p>
 <p>Popen原型是：</p>
 <blockquote>
-<p>subprocess.Popen(args, bufsize=0, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=False, shell=false)</p>
+<p>subprocess.Popen(args, bufsize&#x3D;0, executable&#x3D;None, stdin&#x3D;None, stdout&#x3D;None, stderr&#x3D;None, preexec_fn&#x3D;None, close_fds&#x3D;False, shell&#x3D;false)</p>
 </blockquote>
 <ul>
 <li>参数bufsize：指定缓冲。我到现在还不清楚这个参数的具体含义，望各个大牛指点。</li>
@@ -195,8 +195,8 @@
 <li>参数Close_sfs：在windows平台下，如果close_fds被设置为True，则新创建的子进程将不会继承父进程的输入、输出、错误管道。我们不能将close_fds设置为True同时重定向子进程的标准输入、输出与错误(stdin, stdout, stderr)。</li>
 <li>如果参数shell设为true，程序将通过shell来执行。</li>
 <li>参数cwd用于设置子进程的当前目录。</li>
-<li>参数env是字典类型，用于指定子进程的环境变量。如果env = None，子进程的环境变量将从父进程中继承。</li>
-<li>参数Universal_newlines:不同操作系统下，文本的换行符是不一样的。如：windows下用’/r/n’表示换，而Linux下用 ‘/n’。如果将此参数设置为True，Python统一把这些换行符当作’/n’来处理。</li>
+<li>参数env是字典类型，用于指定子进程的环境变量。如果env &#x3D; None，子进程的环境变量将从父进程中继承。</li>
+<li>参数Universal_newlines:不同操作系统下，文本的换行符是不一样的。如：windows下用’&#x2F;r&#x2F;n’表示换，而Linux下用 ‘&#x2F;n’。如果将此参数设置为True，Python统一把这些换行符当作’&#x2F;n’来处理。</li>
 <li>参数startupinfo与createionflags只在windows下用效，它们将被传递给底层的CreateProcess()函数，用于设置子进程的一些属性，如：主窗口的外观，进程的优先级等等。</li>
 <li>subprocess.PIPE, 在创建Popen对象时，subprocess.PIPE可以初始化stdin, stdout或stderr参数，表示与子进程通信的标准流。</li>
 <li>subprocess.STDOUT, 创建Popen对象时，用于初始化stderr参数，表示将错误通过标准输出流输出。</li>
@@ -205,7 +205,7 @@
 <ul>
 <li>Popen.poll()<br>  用于检查子进程是否已经结束。设置并返回returncode属性。</li>
 <li>Popen.wait()<br>  等待子进程结束。设置并返回returncode属性。</li>
-<li>Popen.communicate(input=None)<br>  与子进程进行交互。向stdin发送数据，或从stdout和stderr中读取数据。可选参数input指定发送到子进程的参数。 Communicate()返回一个元组：(stdoutdata, stderrdata)。注意：如果希望通过进程的stdin向其发送数据，在创建Popen对象的时候，参数stdin必须被设置为PIPE。同样，如 果希望从stdout和stderr获取数据，必须将stdout和stderr设置为PIPE。</li>
+<li>Popen.communicate(input&#x3D;None)<br>  与子进程进行交互。向stdin发送数据，或从stdout和stderr中读取数据。可选参数input指定发送到子进程的参数。 Communicate()返回一个元组：(stdoutdata, stderrdata)。注意：如果希望通过进程的stdin向其发送数据，在创建Popen对象的时候，参数stdin必须被设置为PIPE。同样，如 果希望从stdout和stderr获取数据，必须将stdout和stderr设置为PIPE。</li>
 <li>Popen.send_signal(signal)<br>  向子进程发送信号。</li>
 <li>Popen.terminate()<br>  停止(stop)子进程。在windows平台下，该方法将调用Windows API TerminateProcess（）来结束子进程。</li>
 <li>Popen.kill()<br>  杀死子进程。</li>

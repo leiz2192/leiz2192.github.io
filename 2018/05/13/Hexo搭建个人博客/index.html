@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -183,7 +183,7 @@ hexo s   //s是server的缩写，启动服务, 通过http://localhost:4000/本�
 <p>然后就可以访问<a target="_blank" rel="noopener" href="https://leiz2192.github.io/">博客</a>.</p>
 <h2 id="维护博客"><a href="#维护博客" class="headerlink" title="维护博客"></a>维护博客</h2><p>博客的网页在repo <em>leiz2192.github.io</em>中维护, 而博客的md文件可以在repo <em>leiz2192.hexo</em>中维护. 这样数据和网页分离, 便于管理.</p>
 <p>而在电脑或系统改变了, git clone <em>leiz2192.hexo</em>后就可以继续维护博客, 而且历史文章不丢失.</p>
-<p>另外, 利用git hook可以在每次git push时自动发布博客, 只需在.git/hooks目录中新增pre-push文件, 文件内容如下.</p>
+<p>另外, 利用git hook可以在每次git push时自动发布博客, 只需在.git&#x2F;hooks目录中新增pre-push文件, 文件内容如下.</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 
 hexo d <span class="token parameter variable">-g</span>

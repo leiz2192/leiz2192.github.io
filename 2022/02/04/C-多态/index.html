@@ -25,16 +25,16 @@
 <meta property="og:site_name" content="LazyStones">
 <meta property="og:description" content="什么是多态面向对象的三大特性：封装、继承、多态。  封装：隐藏对象的属性和实现细节，仅对外公开访问方法，并且控制访问级别在面向对象方法中。简言之，用类实现封装，用封装来实现高内聚，低耦合。 继承：从已有的类中派生出新的类，新的类能吸收已有类的属性和行为， 可以实现重用代码和扩展新的能力。 多态：指通过基类的指针或者引用， 在运行时动态调用实际绑定对象函数的行为。多态可以简单地概括为“一个接口，多种">
 <meta property="og:locale">
-<meta property="og:image" content="http://yoursite.com/images/20220204T005410.067.png">
-<meta property="og:image" content="http://yoursite.com/images/20220204T005855.002.png">
-<meta property="og:image" content="http://yoursite.com/images/20220204T010218.310.png">
-<meta property="og:image" content="http://yoursite.com/images/20220204T010241.334.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T005410.067.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T005855.002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T010218.310.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T010241.334.png">
 <meta property="article:published_time" content="2022-02-03T16:04:01.000Z">
-<meta property="article:modified_time" content="2025-04-26T13:56:56.835Z">
+<meta property="article:modified_time" content="2025-05-03T09:07:16.195Z">
 <meta property="article:author" content="Leiz">
 <meta property="article:tag" content="多态">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/20220204T005410.067.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T005410.067.png">
 
   <style>
     :root {
@@ -45,7 +45,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -170,7 +170,7 @@
 <li><strong>即当父类指针或引用指向 父类对象时，就调用父类中定义的虚函数</strong>；</li>
 <li><strong>即当父类指针或引用指向 子类对象时，就调用子类中定义的虚函数</strong>；</li>
 </ul>
-<p>即<strong>同样的调用语句在实际运行时有多种不同的表现形态。</strong>根据多态的这种表现效果，C++中实现多态的条件是：</p>
+<p>即**同样的调用语句在实际运行时有多种不同的表现形态。**根据多态的这种表现效果，C++中实现多态的条件是：</p>
 <ol>
 <li>继承的存在；继承是多态的基础，没有继承就没有多态。</li>
 <li>子类重写父类的虚方法；多态下调用子类重写的虚方法。</li>
@@ -194,11 +194,11 @@
 </ul>
 </li>
 </ol>
-<p><img src="/images/20220204T005410.067.png" alt="image.png"></p>
-<p><img src="/images/20220204T005855.002.png" alt="image.png"></p>
-<p><img src="/images/20220204T010218.310.png" alt="image.png"></p>
-<p><img src="/images/20220204T010241.334.png" alt="image.png"></p>
-<p>由于虚函数的存在，在实例化类对象时，就会产生1个 vptr指针。这样，在普通的类中，类的大小 == 成员变量的大小；在有虚函数的类中，类的大小 == 成员变量的大小 + vptr指针大小。</p>
+<p><img src="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T005410.067.png" alt="20220204T005410.067"></p>
+<p><img src="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T005855.002.png" alt="20220204T005855.002"></p>
+<p><img src="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T010218.310.png" alt="20220204T010218.310"></p>
+<p><img src="https://raw.githubusercontent.com/leiz2192/myblogimages/main/20220204T010241.334.png" alt="20220204T010241.334"></p>
+<p>由于虚函数的存在，在实例化类对象时，就会产生1个 vptr指针。这样，在普通的类中，类的大小 &#x3D;&#x3D; 成员变量的大小；在有虚函数的类中，类的大小 &#x3D;&#x3D; 成员变量的大小 + vptr指针大小。</p>
 <pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
 #include &lt;string&gt;
 

@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -319,7 +319,7 @@
 <li>指定对齐值：#pragma pack (value)时的指定对齐值value。</li>
 <li><strong>数据成员、结构体和类的有效对齐值：自身对齐值和指定对齐值中小的那个值</strong>。</li>
 </ol>
-<p>有了这些值，我们就可以很方便的来讨论具体数据结构的成员和其自身的对齐方式。<strong>有效对齐值N是最终用来决定数据存放地址方式的值，最重要。</strong>有效对齐N，就是表示“对齐在N上”，也就是说该数据的”存放起始地址%N=0”.而数据结构中的数据变量都是按定义的先后顺序来排放的。第一个数据变量的起始地址就是数据结构的起始地址。结构体的成员变量要对齐排放，结构体本身也要根据自身的有效对齐值圆整(就是<code>结构体成员变量占用总长度需要是对结构体有效对齐值的整数倍</code>，结合下面例子理解)。这样就不能理解上面的几个例子的值了。</p>
+<p>有了这些值，我们就可以很方便的来讨论具体数据结构的成员和其自身的对齐方式。**有效对齐值N是最终用来决定数据存放地址方式的值，最重要。**有效对齐N，就是表示“对齐在N上”，也就是说该数据的”存放起始地址%N&#x3D;0”.而数据结构中的数据变量都是按定义的先后顺序来排放的。第一个数据变量的起始地址就是数据结构的起始地址。结构体的成员变量要对齐排放，结构体本身也要根据自身的有效对齐值圆整(就是<code>结构体成员变量占用总长度需要是对结构体有效对齐值的整数倍</code>，结合下面例子理解)。这样就不能理解上面的几个例子的值了。</p>
 <p>例子分析：</p>
 <p>分析例子B；</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
@@ -328,8 +328,8 @@
     <span class="token keyword">short</span> c<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>假设B从地址空间0x0000开始排放。该例子中没有定义指定对齐值，在笔者环境下，该值默认为4。<br><strong>第一个成员变量b的自身对齐值是1，比指定或者默认指定对齐值4小，所以其有效对齐值为1</strong>，所以其存放地址0x0000符合0x0000%1=0.<br>第二个成员变量a，其自身对齐值为4，所以有效对齐值也为4，所以只能存放在起始地址为0x0004到0x0007这四个连续的字节空间中，复核0x0004%4=0,且紧靠第一个变量。<br>第三个变量c,自身对齐值为2，所以有效对齐值也是2，可以存放在0x0008到0x0009这两个字节空间中，符合0x0008%2=0。所以从0x0000到0x0009存放的都是B内容。</p>
-<p>再看数据结构B的自身对齐值为其变量中最大对齐值(这里是b）所以就是4，所以结构体的有效对齐值也是4。根据结构体圆整的要求，0x0009到0x0000=10字节，（10＋2）％4＝0。所以0x0000A到0x000B也为结构体B所占用。故B从0x0000到0x000B共有12个字节,sizeof(struct B)=12;</p>
+<p>假设B从地址空间0x0000开始排放。该例子中没有定义指定对齐值，在笔者环境下，该值默认为4。<br><strong>第一个成员变量b的自身对齐值是1，比指定或者默认指定对齐值4小，所以其有效对齐值为1</strong>，所以其存放地址0x0000符合0x0000%1&#x3D;0.<br>第二个成员变量a，其自身对齐值为4，所以有效对齐值也为4，所以只能存放在起始地址为0x0004到0x0007这四个连续的字节空间中，复核0x0004%4&#x3D;0,且紧靠第一个变量。<br>第三个变量c,自身对齐值为2，所以有效对齐值也是2，可以存放在0x0008到0x0009这两个字节空间中，符合0x0008%2&#x3D;0。所以从0x0000到0x0009存放的都是B内容。</p>
+<p>再看数据结构B的自身对齐值为其变量中最大对齐值(这里是b）所以就是4，所以结构体的有效对齐值也是4。根据结构体圆整的要求，0x0009到0x0000&#x3D;10字节，（10＋2）％4＝0。所以0x0000A到0x000B也为结构体B所占用。故B从0x0000到0x000B共有12个字节,sizeof(struct B)&#x3D;12;</p>
 <p>其实如果就这一个就来说它已将满足字节对齐了,因为它的起始地址是0,因此肯定是对齐的,之所以在后面补充2个字节,是因为编译器为了实现结构数组的存取效率,试想如果我们定义了一个结构B的数组,那么第一个结构起始地址是0没有问题,但是第二个结构呢?按照数组的定义,数组中所有元素都是紧挨着的,如果我们不把结构的大小补充为4的整数倍,那么下一个结构的起始地址将是0x0000A,这显然不能满足结构的地址对齐了,因此我们要把结构补充成有效对齐大小的整数倍.</p>
 <p>其实诸如:对于char型数据，其自身对齐值为1，对于short型为2，对于int,float,double类型，其自身对齐值为4，这些已有类型的自身对齐值也是基于数组考虑的,只是因为这些类型的长度已知了,所以他们的自身对齐值也就已知了.</p>
 <p>同理,分析上面例子C：</p>
@@ -341,9 +341,9 @@
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression"><span class="token function">pack</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> </span><span class="token comment">/*取消指定对齐，恢复缺省对齐*/</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>第一个变量b的自身对齐值为1，指定对齐值为2，所以，其有效对齐值为1，假设C从0x0000开始，那么b存放在0x0000，符合0x0000%1=0;<br>第二个变量，自身对齐值为4，指定对齐值为2，所以有效对齐值为2，所以顺序存放在0x0002、0x0003、0x0004、0x0005四个连续字节中，符合0x0002%2=0。<br>第三个变量c的自身对齐值为2，所以有效对齐值为2，顺序存放在0x0006、0x0007中，符合0x0006%2=0。所以从0x0000到0x00007共八字节存放的是C的变量。又C的自身对齐值为4，所以C的有效对齐值为2。又8%2=0,C只占用0x0000到0x0007的八个字节。所以sizeof(struct C)=8.</p>
+<p>第一个变量b的自身对齐值为1，指定对齐值为2，所以，其有效对齐值为1，假设C从0x0000开始，那么b存放在0x0000，符合0x0000%1&#x3D;0;<br>第二个变量，自身对齐值为4，指定对齐值为2，所以有效对齐值为2，所以顺序存放在0x0002、0x0003、0x0004、0x0005四个连续字节中，符合0x0002%2&#x3D;0。<br>第三个变量c的自身对齐值为2，所以有效对齐值为2，顺序存放在0x0006、0x0007中，符合0x0006%2&#x3D;0。所以从0x0000到0x00007共八字节存放的是C的变量。又C的自身对齐值为4，所以C的有效对齐值为2。又8%2&#x3D;0,C只占用0x0000到0x0007的八个字节。所以sizeof(struct C)&#x3D;8.</p>
 <h3 id="如何修改编译器的默认对齐值"><a href="#如何修改编译器的默认对齐值" class="headerlink" title="如何修改编译器的默认对齐值"></a>如何修改编译器的默认对齐值</h3><ol>
-<li>在VC IDE中，可以这样修改：[Project]|[Settings],c/c++选项卡Category的Code Generation选项的Struct Member Alignment中修改，默认是8字节。</li>
+<li>在VC IDE中，可以这样修改：[Project]|[Settings],c&#x2F;c++选项卡Category的Code Generation选项的Struct Member Alignment中修改，默认是8字节。</li>
 <li>在编码时，可以这样动态修改：#pragma pack . <em><code>注意:是pragma而不是progma.</code></em></li>
 </ol>
 <h3 id="针对字节对齐-我们在编程中如何考虑"><a href="#针对字节对齐-我们在编程中如何考虑" class="headerlink" title="针对字节对齐,我们在编程中如何考虑"></a>针对字节对齐,我们在编程中如何考虑</h3><p>如果在编程的时候要考虑节约空间的话,那么我们只需要假定结构的首地址是0,然后各个变量按照上面的原则进行排列即可,<strong>基本的原则就是把结构中的变量按照类型大小从小到大声明,尽量减少中间的填补空间.</strong><br>还有一种就是为了以空间换取时间的效率,我们显示的进行填补空间进行对齐,比如:<strong>有一种使用空间换时间做法是显式的插入reserved成员.</strong></p>

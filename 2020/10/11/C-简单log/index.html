@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -150,8 +150,10 @@
       <p>平常写一些简单验证程序时，需要频繁输出日志信息便于调试。为了后续验证程序中输出日志信息方便，将平时使用的日志信息抽象成了INFO和FUNC。</p>
 <ul>
 <li>INFO输出单行日志信息，可以输出当前的时间（格式：%Y-%m-%d %H:%M:%S）、进程号和线程号。</li>
-<li>FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）<span id="more"></span></li>
+<li>FUNC利用RAII可以在生命周期（比如函数）的开始和结束分别打印日志信息，并统计执行耗时（单位微妙）</li>
 </ul>
+<span id="more"></span>
+
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;unistd.h&gt;
 #include &lt;chrono&gt;
@@ -215,7 +217,7 @@ int main(int argc, char* argv[]) &#123;
       <div class="prev">
         <span><</span>
         <a class="link" href="/2020/11/21/simple-ftp-server-by-python/">
-          基于Python的简单FTP服务器
+          Python小工具之简单FTP服务器
         </a>
       </div>
     

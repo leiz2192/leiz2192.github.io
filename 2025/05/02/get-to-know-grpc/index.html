@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -155,7 +155,7 @@
       <p>RPC 作为一款由 Google 开发的开源 RPC 框架，凭借其先进的设计理念和强大的功能特性，成为众多开发者的首选。<br>本文将从核心概念、特性优势到实际应用几个方面略探 gRPC。</p>
 <span id="more"></span>
 
-<h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h1><p>gRPC 基于 HTTP/2 协议构建，采用 Protocol Buffers（protobuf）作为默认的接口定义语言（IDL）。<br>HTTP/2 协议具备多路复用、头部压缩、二进制分帧等特性，这使得 gRPC 在网络传输上拥有极高的效率，能够有效减少延迟、提升吞吐量。<br>而 protobuf 是一种高效的结构化数据序列化机制，它以二进制格式存储数据，不仅占用空间小，而且解析速度极快，能够显著降低数据传输和处理的开销。​<br>从架构层面来看，gRPC 包含服务端和客户端两部分。<br>开发者通过 .proto 文件定义服务接口和消息结构，随后使用 protoc 编译器生成对应编程语言的代码，涵盖 Java、Python、Go、C++ 等众多主流语言。<br>服务端实现定义好的服务接口，对外提供服务；客户端则通过生成的代码调用服务端的方法，实现远程过程调用，整个过程简洁且高效。</p>
+<h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h1><p>gRPC 基于 HTTP&#x2F;2 协议构建，采用 Protocol Buffers（protobuf）作为默认的接口定义语言（IDL）。<br>HTTP&#x2F;2 协议具备多路复用、头部压缩、二进制分帧等特性，这使得 gRPC 在网络传输上拥有极高的效率，能够有效减少延迟、提升吞吐量。<br>而 protobuf 是一种高效的结构化数据序列化机制，它以二进制格式存储数据，不仅占用空间小，而且解析速度极快，能够显著降低数据传输和处理的开销。​<br>从架构层面来看，gRPC 包含服务端和客户端两部分。<br>开发者通过 .proto 文件定义服务接口和消息结构，随后使用 protoc 编译器生成对应编程语言的代码，涵盖 Java、Python、Go、C++ 等众多主流语言。<br>服务端实现定义好的服务接口，对外提供服务；客户端则通过生成的代码调用服务端的方法，实现远程过程调用，整个过程简洁且高效。</p>
 <h1 id="特性优势"><a href="#特性优势" class="headerlink" title="特性优势"></a>特性优势</h1><p>gRPC 具有以下几个突出的特性优势：</p>
 <ul>
 <li>高效的序列化和反序列化：gRPC 使用 protobuf 作为默认的序列化格式，能够高效地处理复杂的数据结构，减少数据传输的开销。</li>
@@ -163,7 +163,7 @@
 <li>支持双向流式通信：gRPC 支持双向流式通信，客户端和服务端可以同时发送和接收多个消息，适用于实时数据传输场景。</li>
 <li>支持元数据和认证：gRPC 支持元数据和认证机制，开发者可以在请求和响应中添加自定义的元数据，实现身份验证和授权等功能。</li>
 <li>支持负载均衡和故障转移：gRPC 内置了负载均衡和故障转移机制，能够自动处理服务端的负载均衡和故障转移，提高系统的可用性和稳定性。</li>
-<li>支持多种传输协议：gRPC 支持多种传输协议，包括 HTTP/2、gRPC-Web、gRPC-WebSocket 等（暂未支持 QUIC），开发者可以根据自己的需求选择合适的协议进行通信。</li>
+<li>支持多种传输协议：gRPC 支持多种传输协议，包括 HTTP&#x2F;2、gRPC-Web、gRPC-WebSocket 等（暂未支持 QUIC），开发者可以根据自己的需求选择合适的协议进行通信。</li>
 </ul>
 <h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>gRPC 在实际应用中具有广泛的应用场景，以下是一些常见的应用场景：</p>
 <ul>

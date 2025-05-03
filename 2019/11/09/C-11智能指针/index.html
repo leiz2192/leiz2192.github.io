@@ -40,7 +40,7 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 <body>
   <header class="sea-header">
     <nav class="sea-nav-wrap">
@@ -155,7 +155,7 @@
       <p>智能指针是使用RAII方法对普通指针进行的封装, 所以智能指针实质是对象, 行为表现是指针.</p>
 <p>RAII, Resource Acquisition Is Initialization, 资源获取就是初始化. RAII是一种管理资源、避免泄漏的惯用法. 通常的做法是对于一个对象而言, 我们在构造函数的时候申请空间, 而在析构函数(在离开作用域时调用)的时候释放空间.</p>
 <p>使用智能指针可以方便的管理堆内存, 避免使用普通指针容易导致的堆内存未释放或二次释放等问题.</p>
-<p>C++智能指针在C++11前是<code>std::auto_ptr</code>, C++11后是<code>std::shared_ptr</code>/<code>std::unique_ptr</code>/<code>std::weak_ptr</code>, 使用它们需要包含头文件<code>&lt;memory&gt;</code>.</p>
+<p>C++智能指针在C++11前是<code>std::auto_ptr</code>, C++11后是<code>std::shared_ptr</code>&#x2F;<code>std::unique_ptr</code>&#x2F;<code>std::weak_ptr</code>, 使用它们需要包含头文件<code>&lt;memory&gt;</code>.</p>
 <span id="more"></span>
 
 <h2 id="std-auto-ptr"><a href="#std-auto-ptr" class="headerlink" title="std::auto_ptr"></a><code>std::auto_ptr</code></h2><p><code>std::auto_ptr</code>是C++11前提供的智能指针, 但从C++11开始, <code>std::auto_ptr</code>开始被弃用, 被<code>std::unique_ptr</code>替代.</p>
