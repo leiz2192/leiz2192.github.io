@@ -18,15 +18,15 @@
 
 
   
-  <meta name="description" content="1. 技术栈与生态系统 gRPC 语言支持：官方支持 C++、Java、Python、Go、Node.js 等多种语言，生态成熟，适合跨语言微服务。 协议：基于 HTTP&#x2F;2，支持多路复用、二进制分帧、头部压缩等特性，性能优越。 序列化：默认使用 Protocol Buffers（Protobuf），高效且强类型。   Thrift 语言支持：支持 C++、Java、Python、Rub">
+  <meta name="description" content="技术栈与生态系统 gRPC 语言支持：官方支持 C++、Java、Python、Go、Node.js 等多种语言，生态成熟，适合跨语言微服务。 协议：基于 HTTP&#x2F;2，支持多路复用、二进制分帧、头部压缩等特性，性能优越。 序列化：默认使用 Protocol Buffers（Protobuf），高效且强类型。   Thrift 语言支持：支持 C++、Java、Python、Ruby 等">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rpcx vs gRPC vs Thrift">
 <meta property="og:url" content="http://yoursite.com/2025/05/11/rpcx-vs-grpc-vs-thrift/index.html">
 <meta property="og:site_name" content="LazyStones">
-<meta property="og:description" content="1. 技术栈与生态系统 gRPC 语言支持：官方支持 C++、Java、Python、Go、Node.js 等多种语言，生态成熟，适合跨语言微服务。 协议：基于 HTTP&#x2F;2，支持多路复用、二进制分帧、头部压缩等特性，性能优越。 序列化：默认使用 Protocol Buffers（Protobuf），高效且强类型。   Thrift 语言支持：支持 C++、Java、Python、Rub">
+<meta property="og:description" content="技术栈与生态系统 gRPC 语言支持：官方支持 C++、Java、Python、Go、Node.js 等多种语言，生态成熟，适合跨语言微服务。 协议：基于 HTTP&#x2F;2，支持多路复用、二进制分帧、头部压缩等特性，性能优越。 序列化：默认使用 Protocol Buffers（Protobuf），高效且强类型。   Thrift 语言支持：支持 C++、Java、Python、Ruby 等">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-05-11T11:39:07.000Z">
-<meta property="article:modified_time" content="2025-05-11T11:54:03.684Z">
+<meta property="article:modified_time" content="2025-05-11T12:03:50.648Z">
 <meta property="article:author" content="Leiz">
 <meta property="article:tag" content="rpc">
 <meta name="twitter:card" content="summary">
@@ -147,12 +147,12 @@
       
         <div class="sea-article-catalog">
           <h2>目录</h2>
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%8A%80%E6%9C%AF%E6%A0%88%E4%B8%8E%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">1. 技术栈与生态系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">2. 性能对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">3. 功能特性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">4. 适用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E7%A4%BE%E5%8C%BA%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="toc-number">5.</span> <span class="toc-text">5. 社区与维护</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6. 总结</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88%E4%B8%8E%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">技术栈与生态系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">性能对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">功能特性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="toc-number">5.</span> <span class="toc-text">社区与维护</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
         </div>
       
     
     <div class="sea-article-content">
-      <h1 id="1-技术栈与生态系统"><a href="#1-技术栈与生态系统" class="headerlink" title="1. 技术栈与生态系统"></a>1. 技术栈与生态系统</h1><ul>
+      <h1 id="技术栈与生态系统"><a href="#技术栈与生态系统" class="headerlink" title="技术栈与生态系统"></a>技术栈与生态系统</h1><ul>
 <li>gRPC<ul>
 <li>语言支持：官方支持 C++、Java、Python、Go、Node.js 等多种语言，生态成熟，适合跨语言微服务。</li>
 <li>协议：基于 HTTP&#x2F;2，支持多路复用、二进制分帧、头部压缩等特性，性能优越。</li>
@@ -172,7 +172,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="2-性能对比"><a href="#2-性能对比" class="headerlink" title="2. 性能对比"></a>2. 性能对比</h1><ul>
+<h1 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h1><ul>
 <li>gRPC<ul>
 <li>基于 HTTP&#x2F;2 的二进制协议，在长连接、高并发场景下表现优异。</li>
 <li>Protobuf 序列化效率高，适合低延迟、高吞吐量的场景。</li>
@@ -189,7 +189,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="3-功能特性"><a href="#3-功能特性" class="headerlink" title="3. 功能特性"></a>3. 功能特性</h1><table>
+<h1 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h1><table>
 <thead>
 <tr>
 <th>特性</th>
@@ -229,7 +229,7 @@
 <td>支持自定义协议（如 Protobuf、JSON）</td>
 </tr>
 </tbody></table>
-<h1 id="4-适用场景"><a href="#4-适用场景" class="headerlink" title="4. 适用场景"></a>4. 适用场景</h1><ul>
+<h1 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h1><ul>
 <li>gRPC<ul>
 <li>跨语言微服务架构，尤其是 Google Cloud、Kubernetes 生态。</li>
 <li>对性能和实时性要求高的场景（如金融、物联网）。</li>
@@ -246,12 +246,12 @@
 </ul>
 </li>
 </ul>
-<h1 id="5-社区与维护"><a href="#5-社区与维护" class="headerlink" title="5. 社区与维护"></a>5. 社区与维护</h1><ul>
+<h1 id="社区与维护"><a href="#社区与维护" class="headerlink" title="社区与维护"></a>社区与维护</h1><ul>
 <li>gRPC：Google 主导，开源社区活跃，更新频繁。</li>
 <li>Thrift：Apache 项目，维护稳定但创新较少。</li>
 <li>rpcx：Go 社区项目，更新快，适合快速变化的需求。</li>
 </ul>
-<h1 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h1><ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
 <li>选 gRPC：如果需要跨语言支持、HTTP&#x2F;2 优势（如多路复用），且愿意学习 Protobuf。</li>
 <li>选 Thrift：如果需要灵活性（多协议支持）和对遗留系统的兼容性。</li>
 <li>选 rpcx：如果项目是纯 Go 语言，追求极致性能和简单配置。</li>
